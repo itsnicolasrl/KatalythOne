@@ -1,392 +1,264 @@
-# KATALYTH ONE
-**Plataforma Digital de Gestión Empresarial Inteligente**
+T# KatalythOne
 
----
+**KatalythOne** es una plataforma integral de gestión empresarial construida con tecnologías modernas. Permite gestionar empresas, clientes, proyectos, inventario, gastos, ingresos y mucho más.
 
-## Resumen Ejecutivo
+## 📋 Requisitos previos
 
-Katalyth One es una plataforma SaaS (Software as a Service) diseñada para empoderar a micro, pequeñas y medianas empresas (MiPymes) mediante un sistema integral de creación, operación, análisis y mejora continua del negocio.
+Antes de comenzar, asegúrate de tener instalado lo siguiente en tu computadora:
 
-A diferencia de las herramientas tradicionales de gestión que solo registran datos, Katalyth One construye un modelo digital vivo de la empresa que permite comprender su funcionamiento real, detectar problemas operativos y financieros, y ofrecer recomendaciones estratégicas basadas en datos.
+- **Node.js** (versión 18 o superior): [Descargar](https://nodejs.org/)
+  - Puedes verificar tu versión ejecutando: `node --version`
+- **npm** (generalmente viene con Node.js) o **yarn**/**pnpm** como alternativa
+  - Verifica con: `npm --version`
+- **PostgreSQL** (versión 12 o superior): [Descargar](https://www.postgresql.org/download/)
+  - Debes tener acceso a una instancia de PostgreSQL (local o remota)
 
-> **Eslogan:** "Crea, opera y mejora tu empresa en un solo sistema"
+## 🚀 Instalación rápida (5 pasos)
 
----
+### 1️⃣ Clonar el repositorio
 
-## Propósito del Proyecto
+```bash
+git clone https://github.com/itsnicolasrl/KatalythOne.git
+cd KatalythOne
+```
 
-### Visión
-Convertirnos en la plataforma de referencia para emprendedores y MiPymes que desean estructurar, comprender y hacer crecer sus negocios mediante tecnología inteligente y análisis continuo.
+### 2️⃣ Instalar dependencias
 
-### Misión
-Democratizar el acceso a herramientas de gestión empresarial avanzada, eliminando la brecha tecnológica que enfrentan las pequeñas empresas frente a las grandes corporaciones.
+```bash
+npm install
+```
 
-### Valores Fundamentales
+O si prefieres usar yarn o pnpm:
 
-| Valor | Descripción |
-|---|---|
-| Transparencia | Datos claros y honestos sobre el estado del negocio |
-| Empoderamiento | El empresario toma decisiones informadas, no el sistema |
-| Simplicidad | Tecnología sofisticada, experiencia simple |
-| Mejora Continua | Aprendizaje constante del negocio y del usuario |
-| Accesibilidad | Soluciones al alcance de cualquier presupuesto |
+```bash
+yarn install
+# o
+pnpm install
+```
 
----
+### 3️⃣ Configurar variables de entorno
 
-## Equipo del Proyecto
+Copia el archivo `.env.example` a `.env.local`:
 
-### Roles Scrum
+```bash
+# En Windows (PowerShell)
+Copy-Item .env.example .env.local
 
-| Rol | Nombre | Correo | Responsabilidad |
-|---|---|---|---|
-| Product Owner | [Por asignar] | [email] | Definir y priorizar el Product Backlog, maximizar valor |
-| Scrum Master | [Por asignar] | [email] | Facilitar Scrum, eliminar impedimentos |
-| Development Team | [Por asignar] | [email] | Diseñar, desarrollar y entregar incrementos |
-| UX/UI Designer | [Por asignar] | [email] | Experiencia de usuario e interfaz visual |
-| QA Engineer | [Por asignar] | [email] | Calidad y pruebas del producto |
+# O en Linux/Mac
+cp .env.example .env.local
+```
 
-### Stakeholders Académicos
+**Luego, abre `.env.local` y actualiza las siguientes variables:**
 
-| Rol | Nombre | Institución | Correo |
-|---|---|---|---|
-| Tutor/Asesor Académico | [Por asignar] | [Universidad] | [email] |
-| Revisor de Prácticas | [Por asignar] | [Universidad] | [email] |
+#### Variables de Base de Datos (OBLIGATORIO)
 
----
+```env
+# Formato: postgresql://USUARIO:CONTRASEÑA@HOST:PUERTO/NOMBRE_DB?schema=public
+# Ejemplo local:
+DATABASE_URL="postgresql://postgres:password@localhost:5432/katalyth_dev?schema=public"
 
-## Contexto Académico
+# Ejemplo remoto (Vercel, Railway, etc):
+DATABASE_URL="postgresql://user:password@db.provider.com:5432/dbname?schema=public"
+```
 
-| Campo | Información |
-|---|---|
-| Universidad | [Nombre de la universidad] |
-| Facultad/Escuela | [Ingeniería / Sistemas / Computación] |
-| Carrera | [Ingeniería en Sistemas / Software / etc.] |
-| Materia | Prácticas de Ingeniería |
-| Período Académico | [Semestre / Año] |
-| Duración del Proyecto | [X semanas / meses] |
-| Fecha de Inicio | [DD/MM/AAAA] |
-| Fecha de Finalización | [DD/MM/AAAA] |
-| Créditos / Valoración | [X créditos / porcentaje de nota] |
+#### Variables de Autenticación (OBLIGATORIO)
 
----
+```env
+# Secreto JWT (genera uno largo y aleatorio, mínimo 32 caracteres)
+# Puedes usar: openssl rand -base64 32 (en Mac/Linux)
+AUTH_JWT_SECRET="tu_secreto_muy_largo_y_aleatorio_aqui"
 
-## El Problema que Resolvemos
+# Expiración del token de acceso
+AUTH_JWT_EXPIRES_IN=15m
 
-### Situación Actual
+# Nombres de las cookies
+AUTH_COOKIE_NAME=katalyth_token
+AUTH_REFRESH_COOKIE_NAME=katalyth_refresh_token
 
-Las micro, pequeñas y medianas empresas (MiPymes) representan más del 90% de las empresas en la región; sin embargo, enfrentan graves dificultades:
+# Expiración del token de refresco
+AUTH_REFRESH_EXPIRES_IN=30d
 
-**Antes de crear la empresa:**
-- Ideas de negocio poco estructuradas y validadas
-- Desconocimiento profundo del mercado objetivo
-- Dificultad para definir propuesta de valor clara
-- Falta de orientación para estructurar un modelo viable
+# En desarrollo (HTTP local): false
+# En producción (HTTPS): true
+AUTH_COOKIE_SECURE=false
+```
 
-> Resultado: el 90% de las ideas nunca se concretan o inician con bases débiles.
+#### Variables de la Aplicación (OBLIGATORIO)
 
-**Durante la operación:**
-- Procesos desorganizados o inexistentes
-- Control financiero precario (ingresos vs. gastos)
-- Imposibilidad de entender el rendimiento real del negocio
-- Decisiones basadas en intuición, no en datos
-- Problemas detectados cuando ya es demasiado tarde
+```env
+# URL base de tu aplicación
+# Local: http://localhost:3000
+# Producción: https://tudominio.com
+APP_BASE_URL="http://localhost:3000"
+```
 
-> Resultado: el 80% de las empresas cierran antes de los 5 años.
+#### Variables opcionales
 
-### Nuestra Solución
+```env
+# Facturación (simula pagos sin integración externa)
+BILLING_SIMULATED_MODE=true
 
-Katalyth One aborda estos problemas mediante:
-- Estructuración guiada desde la concepción del negocio
-- Estudio de mercado integrado durante el registro
-- Operación centralizada en una única plataforma
-- Análisis continuo del desempeño empresarial
-- Diagnósticos automáticos con alertas tempranas
-- Recomendaciones estratégicas personalizadas
-- Simulación de decisiones antes de implementarlas
-- Educación empresarial integrada en la experiencia
-
----
-
-## Propuesta de Valor Única
-
-**Para emprendedores que crearán su empresa:**
-"Transforma tu idea en un negocio estructurado y validado antes de invertir tiempo y dinero."
-
-**Para empresas que ya operan:**
-"Entiende realmente cómo funciona tu negocio y recibe recomendaciones para mejorar su rentabilidad."
-
-### Diferenciadores Clave
-
-| Característica | Katalyth One | ERPs Tradicionales | Herramientas Simples |
-|---|---|---|---|
-| Modelo digital del negocio | Sí | Parcial | No |
-| Análisis automático | Sí | Costoso | No |
-| Recomendaciones estratégicas | Sí | No | No |
-| Simulación de decisiones | Sí | No | No |
-| Estudio de mercado integrado | Sí | No | No |
-| Precio accesible MiPymes | Sí | No | Sí |
-| Facilidad de uso | Sí | No | Sí |
-
----
-
-## Público Objetivo
-
-### Segmentos Primarios
-
-| Segmento | Descripción | Necesidad Principal |
-|---|---|---|
-| Aspirantes a emprendedores | Personas con idea de negocio sin estructurar | Validar y planificar antes de lanzar |
-| Emprendedores primerizos | 0–2 años operando, 1–3 empleados | Organizar operación y entender números |
-| Freelancers profesionales | Profesionales independientes escalando | Pasar de persona a empresa estructurada |
-| Pequeñas empresas | 2–5 años, 3–10 empleados | Optimizar procesos y mejorar rentabilidad |
-| Medianas empresas | 5+ años, 10–50 empleados | Visibilidad total de operación multi-departamental |
-
-### Segmentos Secundarios (Futuro)
-- Consultoras y asesores de negocio (usar plataforma con clientes)
-- Incubadoras y aceleradoras (herramienta para startups)
-- Instituciones financieras (evaluación de crédito basada en datos)
-
----
-
-## Funcionalidades Principales
-
-### 1. Creación de Empresa Guiada
-- Wizard de registro estructurado
-- Definición de propuesta de valor
-- Identificación de segmentos de clientes
-- Modelo de ingresos inicial
-- **Diferencial:** estudio de mercado automático por sector
-
-### 2. Gestión de Múltiples Empresas
-- Un usuario, múltiples negocios
-- Contexto separado por empresa (clientes, finanzas, métricas)
-- Dashboard unificado con selector de empresa
-
-### 3. Colaboración en Equipo
-- Invitación de socios y colaboradores
-- Permisos granulares (admin, editor, visualizador)
-- Auditoría de cambios por usuario
-
-### 4. Registro Inteligente del Negocio
-- Catálogo de productos/servicios
-- Base de clientes con historial
-- Registro de ingresos y gastos categorizados
-- Actividades y tareas del negocio
-- **Objetivo:** construir modelo digital completo
-
-### 5. Análisis y Diagnóstico Continuo
-- Métricas financieras automáticas (rentabilidad, flujo de caja, etc.)
-- Indicadores operativos (eficiencia, retención, etc.)
-- Detección de patrones y anomalías
-- Diagnósticos periódicos del estado del negocio
-
-### 6. Sistema de Alertas Inteligente
-- Caída de ventas
-- Aumento de costos
-- Dependencia de clientes (concentración)
-- Problemas de flujo de caja
-- **Método:** Machine Learning + reglas de negocio
-
-### 7. Recomendaciones Estratégicas
-- Optimización de precios
-- Ajuste de estructura de costos
-- Mejora de procesos operativos
-- Estrategias de retención de clientes
-- **Formato:** explicación + impacto estimado + pasos de implementación
-
-### 8. Simulador de Decisiones
-- Cambios de precios
-- Incrementos de costos fijos
-- Contratación de personal
-- Lanzamiento de nuevos productos
-- **Output:** proyección de impacto financiero
-
-### 9. Aprendizaje Integrado
-- Glosario de términos empresariales
-- Explicaciones de métricas (qué significan y por qué importan)
-- Mejores prácticas por industria
-- Casos de estudio de empresas similares
-
----
-
-## Modelo de Negocio
-
-### Fase 1 — Proyecto Académico (Actual)
-- Desarrollo de MVP funcional
-- Validación con usuarios piloto (gratuito)
-- Documentación completa del sistema
-
-### Fase 2 — Lanzamiento Comercial (Post-Graduación)
-
-**Freemium:**
-- Plan Gratis: 1 empresa, funciones básicas, análisis limitado
-- Plan Pro: múltiples empresas, análisis avanzado, simulador
-- Plan Enterprise: API, soporte prioritario, personalización
-
-**Ingresos por Transacción:**
-- Comisión del 0.5–1% sobre pagos procesados en plataforma
-- Comisión del 1–2% sobre facturación electrónica
-
-**Servicios Adicionales:**
-- Consultoría de implementación
-- Capacitación empresarial
-- Integraciones personalizadas
-
-### Estructura de Precios (Referencia)
-
-| Plan | Precio Mensual | Target |
-|---|---|---|
-| Free | $0 | Emprendedores individuales |
-| Starter | $19 USD | Freelancers, microempresas |
-| Pro | $49 USD | Pequeñas empresas |
-| Business | $99 USD | Medianas empresas |
-| Enterprise | A convenir | 50+ empleados |
-
----
-
-## Arquitectura Tecnológica
-
-### Stack Propuesto (A confirmar en fase de diseño)
-
-| Capa | Tecnología | Justificación |
-|---|---|---|
-| Frontend | React / Vue.js / Angular | SPA interactiva, componentes reutilizables |
-| Backend | Node.js / Python (Django/FastAPI) / Java Spring | APIs RESTful, escalabilidad |
-| Base de Datos | PostgreSQL + Redis | Datos estructurados + caché de sesiones |
-| Analytics | Python (Pandas/Scikit-learn) | Motor de análisis y ML |
-| Cloud | AWS / GCP / Azure | Infraestructura escalable |
-| DevOps | Docker, Kubernetes, GitHub Actions | CI/CD, contenedores |
-| Mobile | React Native / Flutter (Fase 2) | App iOS/Android futura |
-
-### Componentes Principales
-- **Auth Service:** gestión de usuarios, permisos, empresas
-- **Business Core:** CRUD de entidades empresariales
-- **Analytics Engine:** procesamiento de métricas y diagnósticos
-- **Recommendation System:** motor de recomendaciones
-- **Simulation Engine:** simulador de escenarios
-- **Notification Service:** alertas y comunicaciones
-- **Learning Module:** contenido educativo
-
----
-
-## Roadmap de Producto
-
-### MVP — Proyecto Académico (Sprints 1–6)
-- Registro de usuario y empresas
-- Gestión básica de clientes, productos, transacciones
-- Dashboard con métricas esenciales
-- Análisis financiero básico
-- Alertas simples (reglas fijas)
-
-### Release 1.0 — Lanzamiento Beta (Meses 7–9)
-- Estudio de mercado integrado
-- Sistema de recomendaciones inicial
-- Multi-usuario con permisos
-- App móvil responsive (PWA)
-- Pasarela de pagos básica
-
-### Release 2.0 — Escalamiento (Meses 10–12)
-- Simulador de decisiones completo
-- Machine Learning para predicciones
-- Integraciones (contabilidad, bancos)
-- API pública para desarrolladores
-- White-label para consultoras
-
-### Futuro (Año 2+)
-- Inteligencia artificial avanzada
-- Marketplace de servicios empresariales
-- Red de emprendedores (networking)
-- Financiamiento integrado (préstamos P2P)
-
----
-
-## Estado Actual del Proyecto
-
-| Fase | Estado | Fecha Estimada |
-|---|---|---|
-| Inicio y Planificación | En progreso | [Fecha] |
-| Sprint 0: Arquitectura | Pendiente | [Fecha] |
-| Sprint 1: Autenticación + Empresas | Pendiente | [Fecha] |
-| Sprint 2: Gestión Core | Pendiente | [Fecha] |
-| Sprint 3: Finanzas Básicas | Pendiente | [Fecha] |
-| Sprint 4: Analytics V1 | Pendiente | [Fecha] |
-| Sprint 5: Alertas + Notificaciones | Pendiente | [Fecha] |
-| Sprint 6: Recomendaciones + UI Polish | Pendiente | [Fecha] |
-| Testing y QA | Pendiente | [Fecha] |
-| Despliegue y Cierre | Pendiente | [Fecha] |
-
----
-
-## Enlaces y Recursos
-
-### Desarrollo
-
-| Recurso               | URL                                         | Descripción |
-|---                    |---                                          |---                 |
-| Repositorio GitHub    | https://github.com/itsnicolasrl/KatalythOne | Código fuente      |
-| Tablero Scrum         | https://trello.com/...                      | Gestión de Sprints |
-| Documentación Técnica | https://wiki...                             | Wiki del proyecto  |
-
-### Diseño
-
-| Recurso         | URL                                    | Descripción                |
-|---              |---                                     |---                         |
-| Prototipo Figma | https://figma.com/...                  | Diseño UI/UX               |
-| Design System   | https://figma.com/...                  | Componentes y estilos      |
-| Assets de Marca | En Drive /11-BRANDING-IDENTIDAD-VISUAL | Logos, colores, tipografía |
-
-### Operación
-
-| Recurso             | URL                         | Descripción         |
-|---                  |---                          |---                  |
-| Staging/QA          | https://staging.katalyth... | Ambiente de pruebas |
-| Producción (futuro) | https://app.katalyth...     | Plataforma en vivo  |
-| Analytics/Monitoreo | https://datadog...          | Métricas de sistema |
-
-### Comunicación
-
-| Canal           | Enlace/Info                | Uso                    |
-|---              |---                         |---                     |
-| Daily Scrum     | [Enlace Meet/Zoom/Discord] | XXXXXX                 |
-| Chat del equipo | [WhatsApp/Slack/Teams]     | Comunicación asíncrona |
-| Correo oficial  | [email del proyecto]       | Externo formal         |
-
----
-
-## Entregables Académicos
-
-| Entregable           | Ubicación                                              | Fecha Límite | Estado        |
-|---                   |---                                                     |---           |---            |
-| Anteproyecto         | /17-ENTREGABLES-ACADEMICOS/Anteproyecto/               | [Fecha]      | En desarrollo |
-| Informe de Prácticas | /17-ENTREGABLES-ACADEMICOS/Informe-Final/              | [Fecha]      | Pendiente     |
-| Presentación Final   | /17-ENTREGABLES-ACADEMICOS/Presentaciones/             | [Fecha]      | Pendiente     |
-| Código Fuente        | /12-DESARROLLO-CODIGO/ + GitHub                        | [Fecha]      | Pendiente     |
-| Demo Funcional       | /10-UX-UI-DISENO-INTERFAZ/05-Assets-Interfaz-Capturas/ | [Fecha]      | Pendiente     |
-
----
-
-## Riesgos Principales Identificados
-
-| Riesgo                                      | Probabilidad  | Impacto | Mitigación                                    |
-|---                                          |---            |---      |---                                            |
-| Alcance muy ambicioso para tiempo académico | Media         | Alto    | Priorizar MVP estricto, usar MoSCoW           |
-| Complejidad del motor de análisis           | Media         | Alto    | Simplificar algoritmos iniciales, usar reglas |
-| Adopción por usuarios piloto                | Media         | Medio   | Incentivos, onboarding muy simple             |
-| Integraciones con bancos/pagos              | Baja          | Alto    | Dejar para post-academia                      |
-| Escalabilidad técnica                       | Baja          | Medio   | Arquitectura preparada para escalar           |
-
-Ver detalle completo en: `/04-GESTION-RIESGOS/03-Registro-Riesgos.xlsx`
-
----
-
-## Glosario
-
-| Término           | Definición en contexto de Katalyth One                                              |
-|---                |---                                                                                  |
-| Empresa Digital   | Representación estructurada de un negocio real dentro del sistema                   |
-| Modelo de Negocio | Descripción de cómo la empresa crea, entrega y captura valor                        |
-| Métrica           | Indicador cuantificable del desempeño empresarial                                   |
-| Diagnóstico       | Evaluación del estado de salud del negocio basada en métricas                       |
-| Recomendación     | Sugerencia de acción para mejorar el desempeño                                      |
-| Simulación        | Proyección del impacto de una decisión antes de implementarla                       |
-| MiPyme            | Micro, pequeña y mediana empresa (menos de 50 empleados, ventas menores a $10M/año) |
+# Secreto para limpieza automática de cuentas
+ACCOUNT_DELETION_CRON_SECRET="secreto_para_cron"
+```
+
+### 4️⃣ Configurar la base de datos
+
+#### Opción A: Base de datos PostgreSQL local (recomendado para desarrollo)
+
+Si tienes PostgreSQL instalado localmente:
+
+```bash
+# Crea la base de datos (si no existe)
+createdb katalyth_dev
+
+# Actualiza DATABASE_URL en .env.local a:
+# DATABASE_URL="postgresql://postgres:password@localhost:5432/katalyth_dev?schema=public"
+```
+
+#### Opción B: Base de datos remota
+
+- **Railway**: [Railway.app](https://railway.app/) - Copia la URL de conexión
+- **Vercel Postgres**: [Vercel Postgres](https://vercel.com/storage/postgres)
+- **Supabase**: [Supabase.com](https://supabase.com/)
+- **AWS RDS**: [AWS RDS](https://aws.amazon.com/rds/)
+
+Luego actualiza `DATABASE_URL` en `.env.local` con tu URL de conexión.
+
+### 5️⃣ Aplicar migraciones de base de datos
+
+```bash
+npm run prisma:migrate:dev
+```
+
+Este comando:
+- Aplica las migraciones existentes
+- Genera el cliente Prisma
+- Sincroniza tu esquema de base de datos
+
+## 🏃 Ejecutar en desarrollo
+
+```bash
+npm run dev
+```
+
+La aplicación estará disponible en: **http://localhost:3000**
+
+Para detener el servidor, presiona `Ctrl + C` en la terminal.
+
+## 📚 Scripts disponibles
+
+| Comando | Descripción |
+|---------|------------|
+| `npm run dev` | Inicia servidor de desarrollo |
+| `npm run build` | Compila la aplicación para producción |
+| `npm start` | Inicia servidor de producción |
+| `npm run lint` | Ejecuta ESLint para verificar errores de código |
+| `npm test` | Ejecuta tests (una vez) |
+| `npm run test:watch` | Ejecuta tests en modo observación |
+| `npm run prisma:generate` | Regenera cliente Prisma |
+| `npm run prisma:migrate:dev` | Crea y aplica migraciones |
+| `npm run prisma:studio` | Abre Prisma Studio (interfaz gráfica de BD) |
+
+## 🏗️ Estructura del proyecto
+
+```
+KatalythOne/
+├── app/                    # Rutas y componentes Next.js (App Router)
+│   ├── api/               # Rutas API REST
+│   ├── dashboard/         # Dashboard principal
+│   ├── login/             # Página de login
+│   ├── register/          # Página de registro
+│   └── ...
+├── src/
+│   ├── api/               # Lógica de autenticación y HTTP
+│   ├── db/                # Configuración de Prisma
+│   ├── lib/               # Utilidades y funciones auxiliares
+│   ├── server/            # Lógica del servidor
+│   ├── services/          # Servicios de negocio
+│   └── ui/                # Componentes UI reutilizables
+├── prisma/
+│   ├── schema.prisma      # Definición del modelo de datos
+│   └── migrations/        # Historial de migraciones
+├── tests/                 # Tests unitarios e integración
+├── public/                # Archivos estáticos
+├── .env.example           # Plantilla de variables de entorno
+└── package.json           # Dependencias y scripts
+```
+
+## 🔧 Troubleshooting
+
+### Error: "ECONNREFUSED" - No puedo conectarme a la base de datos
+
+**Problema**: La aplicación no puede conectarse a PostgreSQL.
+
+**Solución**:
+1. Verifica que PostgreSQL esté corriendo:
+   - Windows: Abre servicios y busca "PostgreSQL"
+   - Linux/Mac: `pg_isready`
+2. Verifica `DATABASE_URL` en `.env.local`
+3. Prueba la conexión: `psql "postgresql://USER:PASSWORD@HOST:5432/DB_NAME"`
+
+### Error: "PRISMA not found" o "Prisma Client not generated"
+
+**Solución**:
+```bash
+npm install
+npm run prisma:generate
+npm run prisma:migrate:dev
+
+```
+
+### Las migraciones no se aplican
+
+**Solución**:
+```bash
+# Regenera el cliente y aplica migraciones
+npm run prisma:generate
+npm run prisma:migrate:dev
+
+# O si necesitas ver el estado:
+npm run prisma:studio
+```
+
+## 🚀 Deployment
+
+### Desplegar en Vercel (recomendado)
+
+1. Push tu código a GitHub
+2. Ve a [Vercel.com](https://vercel.com)
+3. Conecta tu repositorio
+4. Configura variables de entorno:
+   - `DATABASE_URL`
+   - `AUTH_JWT_SECRET`
+   - `AUTH_COOKIE_SECURE=true`
+   - `APP_BASE_URL=https://tudominio.vercel.app`
+5. Deploy
+
+### Desplegar en tu propio servidor
+
+```bash
+# En el servidor
+npm install
+npm run build
+npm start
+```
+
+### Variables de entorno en producción
+
+**IMPORTANTE**: En producción, SIEMPRE:
+- ✅ Usa URLs seguras (HTTPS)
+- ✅ Establece `AUTH_COOKIE_SECURE=true`
+- ✅ Usa valores aleatorios fuertes para secretos
+- ✅ No incluyas `.env.local` en el repositorio
+
+## 📖 Tecnologías
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (React 19)
+- **Runtime**: Node.js
+- **BD**: [PostgreSQL](https://www.postgresql.org/) con [Prisma ORM](https://www.prisma.io/)
+- **Estilos**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Auth**: JWT + Cookies HTTP-only
+- **Testing**: [Vitest](https://vitest.dev/)
+- **Linting**: [ESLint](https://eslint.org/)
+- **Internacionalización**: [next-intl](https://next-intl-docs.vercel.app/)
