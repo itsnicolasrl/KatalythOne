@@ -1,0 +1,13 @@
+date,type,amount,currency,customer,email,phone,description
+2026-03-01,REVENUE,1250.50,USD,Cliente Demo,cliente@demo.com,+573001112233,Servicio mensual de marketing
+2026-03-03,EXPENSE,340.00,USD,,,,Pago de herramientas SaaS
+2026-03-07,REVENUE,890.00,USD,Empresa Alfa,contacto@alfa.com,+573002224455,Proyecto de diseño web
+2026-03-10,EXPENSE,120.00,USD,,,,Publicidad digital
+
+"Notas:"
+"- date: formato recomendado YYYY-MM-DD"
+"- type: solo REVENUE o EXPENSE"
+"- amount: numero positivo"
+"- currency: USD, EUR, COP, etc."
+"- customer/email/phone: opcionales (especialmente en gastos)"
+"- description: detalle del movimiento"

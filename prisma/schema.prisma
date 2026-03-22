@@ -1,0 +1,942 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CompanyRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum OperationStatus {
+  PLANNED
+  RUNNING
+  COMPLETED
+  PAUSED
+  CANCELLED
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum AlertType {
+  LOW_PROFITABILITY
+  REVENUE_ZERO
+  COSTS_EXCESSIVE
+  OPERATIONAL_DISORDER
+  NEGATIVE_GROWTH
+  CUSTOMER_DEPENDENCE
+  FINANCIAL_RISK
+  SALES_FALL
+  ONBOARDING_PROBLEM
+}
+
+enum AlertStatus {
+  OPEN
+  RESOLVED
+  SNOOZED
+}
+
+enum SimulationScenarioType {
+  PRICE_CHANGE
+  COST_INCREASE
+  NEW_PRODUCT
+  CONTRACTING
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  BLOCKED
+  DONE
+  CANCELLED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TaskEventType {
+  CREATED
+  STATUS_CHANGED
+  COMMENT
+}
+
+enum BillingPlanCode {
+  FREE
+  PRO
+  BUSINESS
+}
+
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  passwordHash String
+  accountDeletionRequestedAt DateTime?
+  accountDeletionScheduledFor DateTime?
+  fullName     String?
+  avatarUrl    String?
+  phone        String?
+  addressLine1 String?
+  city         String?
+  country      String?
+  createdAt    DateTime       @default(now())
+
+  memberships  CompanyUser[]
+  simulations  SimulationRun[]
+  learning     LearningProgress[]
+  refreshTokens RefreshToken[]
+  onboardingSessions OnboardingSession[]
+
+  createdInvites  CompanyInvite[] @relation("CompanyInviteCreatedByUser")
+  acceptedInvites CompanyInvite[] @relation("CompanyInviteAcceptedByUser")
+
+  billingSubscription UserSubscription?
+
+  createdProjects Project[] @relation("UserCreatedProjects")
+  createdTasks Task[] @relation("UserCreatedTasks")
+  assignedTasks Task[] @relation("UserAssignedTasks")
+  taskEvents TaskEvent[] @relation("UserTaskEventsActor")
+
+  projectTimeEntries ProjectTimeEntry[]
+
+  @@index([accountDeletionScheduledFor])
+}
+
+model UserSubscription {
+  id String @id @default(cuid())
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  planCode BillingPlanCode @default(FREE)
+
+  stripeCustomerId     String?
+  stripeSubscriptionId String? @unique
+  stripeStatus         String?
+  currentPeriodEnd    DateTime?
+
+  startedAt  DateTime  @default(now())
+  canceledAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([stripeCustomerId])
+}
+
+model Company {
+  id        String    @id @default(cuid())
+  name      String
+  logoUrl   String?
+  createdAt DateTime  @default(now())
+
+  memberships    CompanyUser[]
+  invites        CompanyInvite[]
+  onboardingSessions OnboardingSession[]
+  projects       Project[]
+  tasks          Task[]
+  taskEvents     TaskEvent[]
+  customers      Customer[]
+  revenues       Revenue[]
+  expenses       Expense[]
+  suppliers      Supplier[]
+  purchaseOrders PurchaseOrder[]
+  purchaseReceipts PurchaseReceipt[]
+  inventoryItems InventoryItem[]
+  inventoryMovements InventoryMovement[]
+  operations     Operation[]
+  processes      Process[]
+  metricSnapshots MetricSnapshot[]
+  alerts         Alert[]
+  recommendations Recommendation[]
+  simulations    SimulationRun[]
+  learning       LearningProgress[]
+  calendarEvents CalendarEvent[]
+  projectTimeEntries ProjectTimeEntry[]
+
+  onboardingProfile CompanyOnboardingProfile?
+  revenueStreams RevenueStreamTemplate[]
+  expenseCategories ExpenseCategoryTemplate[]
+}
+
+model Project {
+  id String @id @default(cuid())
+  companyId String
+
+  name String
+  description String?
+  status ProjectStatus @default(ACTIVE)
+
+  // Presupuesto estimado para calcular rentabilidad (MVP).
+  budgetCurrency String?
+  estimatedCostCents BigInt?
+  estimatedRevenueCents BigInt?
+
+  createdByUserId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdByUser User? @relation(fields: [createdByUserId], references: [id], onDelete: SetNull, name: "UserCreatedProjects")
+
+  tasks Task[]
+
+  revenues Revenue[]
+  expenses Expense[]
+  timeEntries ProjectTimeEntry[]
+  calendarEvents CalendarEvent[]
+
+  @@index([companyId, status])
+}
+
+model Task {
+  id String @id @default(cuid())
+  companyId String
+
+  projectId String?
+  project Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  title String
+  description String?
+
+  status TaskStatus @default(TODO)
+  priority TaskPriority @default(MEDIUM)
+
+  dueAt DateTime?
+  completedAt DateTime?
+
+  assigneeUserId String?
+  assignee User? @relation(fields: [assigneeUserId], references: [id], onDelete: SetNull, name: "UserAssignedTasks")
+
+  createdByUserId String?
+  createdByUser User? @relation(fields: [createdByUserId], references: [id], onDelete: SetNull, name: "UserCreatedTasks")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  events TaskEvent[]
+
+  calendarEvents CalendarEvent[]
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, status])
+  @@index([companyId, projectId])
+}
+
+model TaskEvent {
+  id String @id @default(cuid())
+  companyId String
+  taskId String
+
+  type TaskEventType
+  actorUserId String?
+  createdAt DateTime @default(now())
+
+  statusFrom TaskStatus?
+  statusTo TaskStatus?
+
+  message String?
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  actorUser User? @relation(fields: [actorUserId], references: [id], onDelete: SetNull, name: "UserTaskEventsActor")
+
+  @@index([companyId, taskId])
+  @@index([companyId, createdAt])
+}
+
+model CompanyUser {
+  userId    String
+  companyId String
+  role      CompanyRole @default(MEMBER)
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@id([userId, companyId])
+}
+
+model CompanyInvite {
+  id String @id @default(cuid())
+
+  companyId String
+  email String
+  role CompanyRole
+
+  // Guardamos solo el hash del token (no el token en claro).
+  tokenHash String @unique
+
+  createdByUserId String?
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  acceptedByUserId String?
+  acceptedAt DateTime?
+  revokedAt DateTime?
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdByUser User? @relation(fields: [createdByUserId], references: [id], onDelete: SetNull, name: "CompanyInviteCreatedByUser")
+  acceptedByUser User? @relation(fields: [acceptedByUserId], references: [id], onDelete: SetNull, name: "CompanyInviteAcceptedByUser")
+
+  @@index([companyId, expiresAt])
+  @@index([email])
+}
+
+enum CustomerKind {
+  PERSON
+  COMPANY
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  companyId String
+
+  /// Nombre para mostrar o nombre comercial (siempre requerido en UI).
+  name      String
+  email     String?
+  phone     String?
+
+  /// Persona natural vs empresa (B2B).
+  kind CustomerKind @default(PERSON)
+
+  /// Documento de identidad (persona) o referencia interna.
+  documentId String?
+
+  legalName String? /// Razón social (empresa)
+  taxId     String? /// NIT / RFC / VAT / identificación fiscal
+
+  industry String?
+
+  secondaryEmail String?
+  secondaryPhone String?
+  contactRole    String? /// Cargo del contacto principal (típico en empresas)
+
+  website String?
+
+  addressLine1 String?
+  addressLine2 String?
+  city         String?
+  region       String?
+  country      String?
+  postalCode   String?
+
+  notes String? @db.Text
+
+  createdAt DateTime @default(now())
+
+  company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  revenues Revenue[]
+  calendarEvents CalendarEvent[]
+
+  @@index([companyId])
+  @@index([companyId, kind])
+}
+
+model Revenue {
+  id          String   @id @default(cuid())
+  companyId   String
+  customerId  String?
+  occurredAt  DateTime
+
+  amountCents BigInt
+  currency    String
+  description String?
+
+  paymentMethod String?
+  reference     String?
+  channel       String?
+  quantity      Int?
+  unitPriceCents BigInt?
+
+  // Para imputar ingresos a proyectos (MVP).
+  projectId String?
+
+  createdAt   DateTime @default(now())
+
+  company  Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  project  Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, occurredAt])
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  companyId   String
+  occurredAt  DateTime
+
+  amountCents BigInt
+  currency    String
+  description String?
+
+  category      String?
+  vendor        String?
+  paymentMethod String?
+  isRecurring   Boolean  @default(false)
+
+  // Para imputar costos a proyectos (MVP).
+  projectId String?
+
+  createdAt   DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  project Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, occurredAt])
+  @@index([companyId, category])
+}
+
+enum InventoryMovementDirection {
+  IN
+  OUT
+}
+
+model InventoryItem {
+  id                String   @id @default(cuid())
+  companyId         String
+  name              String
+  sku               String?
+  unit              String   @default("ud")
+  quantityOnHand    Int      @default(0)
+  lowStockThreshold Int?
+  costCentsPerUnit  Int?
+  notes             String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company   Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  movements InventoryMovement[]
+
+  @@index([companyId])
+}
+
+model InventoryMovement {
+  id         String                     @id @default(cuid())
+  companyId  String
+  itemId     String
+  direction  InventoryMovementDirection
+  quantity   Int
+  occurredAt DateTime
+  note       String?
+
+  createdAt DateTime @default(now())
+
+  company Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  item    InventoryItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, occurredAt])
+  @@index([itemId])
+}
+
+model Operation {
+  id          String @id @default(cuid())
+  companyId   String
+  name        String
+  status      OperationStatus @default(PLANNED)
+
+  scheduledFor DateTime?
+  completedAt  DateTime?
+
+  description String?
+  createdAt   DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  calendarEvents CalendarEvent[]
+
+  @@index([companyId, status])
+}
+
+model Process {
+  id          String @id @default(cuid())
+  companyId   String
+  name        String
+  description String?
+
+  createdAt   DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  steps   ProcessStep[]
+
+  @@index([companyId])
+}
+
+model ProcessStep {
+  id        String @id @default(cuid())
+  processId String
+
+  name  String
+  ord   Int
+  createdAt DateTime @default(now())
+
+  process Process @relation(fields: [processId], references: [id], onDelete: Cascade)
+
+  @@index([processId, ord])
+}
+
+model MetricSnapshot {
+  id String @id @default(cuid())
+  companyId String
+
+  periodStart DateTime
+  periodEnd   DateTime
+
+  currency String
+  revenueCents BigInt
+  expenseCents BigInt
+  profitCents  BigInt
+  profitMarginBps Int?
+
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  alerts  Alert[]
+
+  @@index([companyId, periodEnd])
+}
+
+model Alert {
+  id String @id @default(cuid())
+  companyId String
+
+  snapshotId String?
+  snapshot   MetricSnapshot? @relation(fields: [snapshotId], references: [id], onDelete: SetNull)
+
+  type AlertType
+  severity AlertSeverity
+  status AlertStatus @default(OPEN)
+
+  title String
+  message String
+
+  sourceOnboardingSessionId String?
+
+  createdAt DateTime @default(now())
+  resolvedAt DateTime?
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  recommendations Recommendation[]
+
+  @@index([companyId, status])
+  @@index([sourceOnboardingSessionId])
+}
+
+model Recommendation {
+  id String @id @default(cuid())
+  companyId String
+
+  alertId String?
+  alert Alert? @relation(fields: [alertId], references: [id], onDelete: SetNull)
+
+  title String
+  rationale String
+  expectedImpactCents BigInt?
+  actionPlan String
+
+  sourceOnboardingSessionId String?
+
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, createdAt])
+  @@index([sourceOnboardingSessionId])
+}
+
+model SimulationRun {
+  id String @id @default(cuid())
+  companyId String
+  createdByUserId String?
+
+  scenarioType SimulationScenarioType
+  parameters Json
+  projection Json
+
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdByUser User? @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, createdAt])
+}
+
+model LearningProgress {
+  id String @id @default(cuid())
+  companyId String
+  userId String
+
+  lessonKey String
+  progressPercent Int @default(0)
+  completedAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, userId, lessonKey])
+  @@index([companyId, userId])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  revokedAt DateTime?
+  replacedByTokenHash String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model Permission {
+  id String @id @default(cuid())
+
+  // Clave única y estable (p.ej. "company.members.manage")
+  key String @unique
+  description String?
+
+  createdAt DateTime @default(now())
+
+  rolePermissions RolePermission[]
+}
+
+model RolePermission {
+  role CompanyRole
+  permissionId String
+  allowed Boolean @default(true)
+  createdAt DateTime @default(now())
+
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([role, permissionId])
+}
+
+enum OnboardingMode {
+  NEW
+  EXISTING
+}
+
+enum OnboardingStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum OnboardingStepKey {
+  CHOOSE_COMPANY_MODE
+  COMPANY_NAME
+  COMPANY_PICK
+  BUSINESS_STAGE
+  YEARS_OPERATING
+  TEAM_SIZE
+  WHAT_DOES_COMPANY_DO
+  WHAT_OFFERS
+  TARGET_CUSTOMER
+  CURRENT_CLIENT_TYPE
+  ACTIVE_CLIENTS
+  TOP_CLIENT_CONCENTRATION
+  BUSINESS_FLOW
+  INCOME_STREAMS
+  EXPENSE_CATEGORIES
+  MONTHLY_INCOME_RANGE
+  MONTHLY_EXPENSE_RANGE
+  MATURITY_LEVEL
+  GOALS
+  PROBLEMS
+}
+
+model OnboardingSession {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyId String?
+  company Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  mode OnboardingMode @default(NEW)
+  status OnboardingStatus @default(ACTIVE)
+  stepKey OnboardingStepKey @default(CHOOSE_COMPANY_MODE)
+
+  completedAt DateTime?
+
+  answers OnboardingAnswer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, status])
+}
+
+model OnboardingAnswer {
+  id String @id @default(cuid())
+  sessionId String
+  session OnboardingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  stepKey OnboardingStepKey
+  // Valor del usuario; en generación lo parseamos con zod/validadores.
+  value Json
+
+  createdAt DateTime @default(now())
+
+  @@unique([sessionId, stepKey])
+  @@index([sessionId])
+}
+
+model CompanyOnboardingProfile {
+  companyId String @id
+
+  companyType String
+  businessModel Json
+
+  whatCompanyDoes String
+  offers Json
+  targetCustomer String
+  businessFlowSteps Json
+
+  incomeStreams Json
+  expenseCategories Json
+  problems Json
+  opportunities Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+model RevenueStreamTemplate {
+  id String @id @default(cuid())
+  companyId String
+
+  name String
+  description String?
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, name])
+}
+
+model ExpenseCategoryTemplate {
+  id String @id @default(cuid())
+  companyId String
+
+  name String
+  description String?
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, name])
+}
+
+enum CalendarEventType {
+  MEETING
+  CUSTOMER_PAYMENT_DUE
+  SUPPLIER_PAYMENT_DUE
+  TAX_DUE
+  CAMPAIGN_LAUNCH
+  TASK
+  OPERATION
+  CUSTOM
+}
+
+enum CalendarEventStatus {
+  OPEN
+  DONE
+  CANCELLED
+}
+
+enum PurchaseOrderStatus {
+  DRAFT
+  SENT
+  CONFIRMED
+  PARTIALLY_RECEIVED
+  RECEIVED
+  CANCELLED
+}
+
+model CalendarEvent {
+  id String @id @default(cuid())
+  companyId String
+
+  type CalendarEventType
+  status CalendarEventStatus @default(OPEN)
+
+  title String
+  description String?
+
+  startAt DateTime
+  endAt DateTime?
+  allDay Boolean @default(false)
+
+  priority Int?
+
+  customerId String?
+  projectId String?
+  supplierId String?
+  taskId String?
+  operationId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  supplier Supplier? @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  task Task? @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  operation Operation? @relation(fields: [operationId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, startAt])
+}
+
+model ProjectTimeEntry {
+  id String @id @default(cuid())
+  companyId String
+
+  projectId String
+  userId String
+
+  // Horas en minutos para evitar problemas de precisión.
+  minutes Int
+  description String?
+
+  occurredAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, projectId, occurredAt])
+  @@index([companyId, userId, occurredAt])
+}
+
+model Supplier {
+  id String @id @default(cuid())
+  companyId String
+
+  name String
+  contactName String?
+  email String?
+  phone String?
+
+  paymentTermsDays Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  purchaseOrders PurchaseOrder[]
+  calendarEvents CalendarEvent[]
+}
+
+model PurchaseOrder {
+  id String @id @default(cuid())
+  companyId String
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  supplierId String
+  supplier Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  status PurchaseOrderStatus @default(DRAFT)
+
+  orderNumber String?
+  currency String
+  expectedDeliveryAt DateTime?
+  receivedAt DateTime?
+
+  isPaid Boolean @default(false)
+  paidAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items PurchaseOrderItem[]
+  receipts PurchaseReceipt[]
+
+  @@index([companyId, status])
+}
+
+model PurchaseOrderItem {
+  id String @id @default(cuid())
+  purchaseOrderId String
+  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+
+  description String
+  quantity Int
+  unitPriceCents BigInt
+  amountCents BigInt
+
+  receivedQuantity Int @default(0)
+
+  createdAt DateTime @default(now())
+
+  receiptItems PurchaseReceiptItem[]
+
+  @@index([purchaseOrderId])
+}
+
+model PurchaseReceipt {
+  id String @id @default(cuid())
+  companyId String
+  purchaseOrderId String
+  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+
+  receivedAt DateTime @default(now())
+  note String?
+  receivedByUserId String?
+
+  createdAt DateTime @default(now())
+
+  receiptItems PurchaseReceiptItem[]
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, purchaseOrderId, receivedAt])
+}
+
+model PurchaseReceiptItem {
+  id String @id @default(cuid())
+  receiptId String
+  receipt PurchaseReceipt @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+
+  purchaseOrderItemId String
+  purchaseOrderItem PurchaseOrderItem @relation(fields: [purchaseOrderItemId], references: [id], onDelete: Cascade)
+
+  receivedQuantity Int
+  receivedAmountCents BigInt
+
+  createdAt DateTime @default(now())
+
+  @@index([receiptId, purchaseOrderItemId])
+}
+
