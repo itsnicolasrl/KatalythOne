@@ -38,24 +38,24 @@ pnpm install
 
 ### 3️⃣ Configurar variables de entorno
 
-Copia el archivo `.env.example` a `.env.local`:
+Copia el archivo `.env.example` a `.env`:
 
 ```bash
 # En Windows (PowerShell)
-Copy-Item .env.example .env.local
+Copy-Item .env.example .env
 
 # O en Linux/Mac
-cp .env.example .env.local
+cp .env.example .env
 ```
 
-**Luego, abre `.env.local` y actualiza las siguientes variables:**
+**Luego, abre `.env` y actualiza las siguientes variables:**
 
 #### Variables de Base de Datos (OBLIGATORIO)
 
 ```env
 # Formato: postgresql://USUARIO:CONTRASEÑA@HOST:PUERTO/NOMBRE_DB?schema=public
 # Ejemplo local:
-DATABASE_URL="postgresql://postgres:password@localhost:5432/katalyth_dev?schema=public"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/katalythone?schema=public"
 
 # Ejemplo remoto (Vercel, Railway, etc):
 DATABASE_URL="postgresql://user:password@db.provider.com:5432/dbname?schema=public"
@@ -113,7 +113,7 @@ Si tienes PostgreSQL instalado localmente:
 createdb katalyth_dev
 
 # Actualiza DATABASE_URL en .env.local a:
-# DATABASE_URL="postgresql://postgres:password@localhost:5432/katalyth_dev?schema=public"
+# DATABASE_URL="postgresql://postgres:password@localhost:5432/katalythone?schema=public"
 ```
 
 #### Opción B: Base de datos remota
@@ -123,7 +123,7 @@ createdb katalyth_dev
 - **Supabase**: [Supabase.com](https://supabase.com/)
 - **AWS RDS**: [AWS RDS](https://aws.amazon.com/rds/)
 
-Luego actualiza `DATABASE_URL` en `.env.local` con tu URL de conexión.
+Luego actualiza `DATABASE_URL` en `.env` con tu URL de conexión.
 
 ### 5️⃣ Aplicar migraciones de base de datos
 
