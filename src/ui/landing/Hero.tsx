@@ -3,11 +3,8 @@ import { Building2 } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="bg-white relative overflow-hidden border-b border-black/6">
-      {/* Fondo decorativo sutil */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-[#F28705]/5 blur-3xl -translate-y-1/3 translate-x-1/3" />
-
-      <div className="max-w-6xl mx-auto px-5 pt-16 pb-14 relative">
+    <section className="bg-white">
+      <div className="max-w-6xl mx-auto px-5 pt-16 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Texto */}
           <div>
@@ -19,7 +16,7 @@ export function Hero() {
               <span className="text-[#F28705]">empresa</span><br />
               en datos reales
             </h1>
-            <p className="mt-6 text-lg text-black/60 leading-relaxed max-w-xl">
+            <p className="mt-6 text-lg text-black/60 leading-relaxed max-w-lg">
               Estructura, opera, analiza y mejora tu negocio desde una sola plataforma. Sin plantillas genéricas.
             </p>
 
@@ -36,8 +33,7 @@ export function Hero() {
               </a>
             </div>
 
-            {/* Mini stats */}
-            <div className="mt-10 flex items-center gap-8">
+            <div className="mt-12 flex items-center gap-8">
               {[["5+","módulos"],["24/7","alertas"],["100%","datos reales"]].map(([num, label]) => (
                 <div key={label}>
                   <p className="text-2xl font-black text-black">{num}</p>
@@ -50,7 +46,6 @@ export function Hero() {
           {/* Dashboard mock */}
           <div className="lg:pl-4">
             <div className="rounded-3xl border border-black/8 bg-[#FAFAFA] shadow-xl shadow-black/5 p-5">
-              {/* Header mock */}
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
                   <div className="h-8 w-8 rounded-xl bg-[#F28705]/15 flex items-center justify-center">
@@ -68,7 +63,6 @@ export function Hero() {
                 </div>
               </div>
 
-              {/* KPI cards */}
               <div className="grid grid-cols-3 gap-2.5 mb-3">
                 {[
                   { label: "Ingresos", val: "35.3K", up: true },
@@ -85,7 +79,6 @@ export function Hero() {
                 ))}
               </div>
 
-              {/* Chart placeholder */}
               <div className="rounded-2xl bg-white border border-black/6 p-4 mb-3">
                 <div className="flex items-end gap-1.5 h-20">
                   {[40,55,35,70,60,80,65,90,75,95,85,100].map((h, i) => (
@@ -106,7 +99,6 @@ export function Hero() {
                 </div>
               </div>
 
-              {/* Recommendations */}
               <div className="space-y-2">
                 {[
                   { text: "Concentración en 2 clientes: riesgo de dependencia", dot: "#F25C05" },
@@ -119,21 +111,6 @@ export function Hero() {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="border-t border-black/6 bg-[#FCFCFC]">
-        <div className="max-w-6xl mx-auto px-5 py-8">
-          <p className="text-center text-[clamp(1rem,2vw,1.75rem)] font-black tracking-tight text-black/80">
-            Confiado por empresas que operan con datos reales
-          </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm font-bold text-black/40">
-            <span>Katalyth Studio</span>
-            <span>AceroLab</span>
-            <span>Nova Brands</span>
-            <span>Delta Trade</span>
-            <span>Nexo Group</span>
           </div>
         </div>
       </div>
