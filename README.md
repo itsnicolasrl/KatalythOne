@@ -110,7 +110,7 @@ Si tienes PostgreSQL instalado localmente:
 
 ```bash
 # Crea la base de datos (si no existe)
-createdb katalyth_dev
+createdb katalythone
 
 # Actualiza DATABASE_URL en .env.local a:
 # DATABASE_URL="postgresql://postgres:password@localhost:5432/katalythone?schema=public"
