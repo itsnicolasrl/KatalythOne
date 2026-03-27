@@ -1,4 +1,4 @@
-T# KatalythOne
+# KatalythOne
 
 **KatalythOne** es una plataforma integral de gestión empresarial construida con tecnologías modernas. Permite gestionar empresas, clientes, proyectos, inventario, gastos, ingresos y mucho más.
 
