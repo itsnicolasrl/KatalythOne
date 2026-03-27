@@ -153,7 +153,15 @@ export async function createPurchaseOrder(input: PurchaseOrderCreateInput) {
     },
   });
 
-  return order;
+    // Convert BigInts to numbers for JSON serialization
+  return {
+    ...order,
+    items: order.items.map((item) => ({
+      ...item,
+      unitPriceCents: Number(item.unitPriceCents),
+      amountCents: Number(item.amountCents),
+    })),
+  };
 }
 
 export async function getPurchaseOrderDetail(params: { companyId: string; purchaseOrderId: string }) {
@@ -184,7 +192,16 @@ export async function getPurchaseOrderDetail(params: { companyId: string; purcha
   });
 
   if (!order) throw new HttpError("Orden de compra no encontrada", 404, "PO_NOT_FOUND");
-  return order;
+
+  // Convert BigInts to numbers for JSON serialization
+  return {
+    ...order,
+    items: order.items.map((item) => ({
+      ...item,
+      unitPriceCents: Number(item.unitPriceCents),
+      amountCents: Number(item.amountCents),
+    })),
+  };
 }
 
 export async function receivePurchaseOrder(input: PurchaseOrderReceiveInput) {

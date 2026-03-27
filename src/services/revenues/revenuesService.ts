@@ -15,6 +15,7 @@ export type RevenueCreateInput = {
   channel?: string | null;
   quantity?: number | null;
   unitPriceCents?: number | null;
+  inventoryItemId?: string | null;
 };
 
 export type RevenueUpdateInput = {
@@ -28,6 +29,7 @@ export type RevenueUpdateInput = {
   channel?: string | null;
   quantity?: number | null;
   unitPriceCents?: number | null;
+  inventoryItemId?: string | null;
 };
 
 export function moneyToCents(amount: number): number {
@@ -69,6 +71,7 @@ export async function listRevenues(params: { companyId: string; take?: number })
       quantity: true,
       unitPriceCents: true,
       customerId: true,
+      inventoryItemId: true,
       customer: { select: { id: true, name: true } },
       createdAt: true,
     },
@@ -98,6 +101,15 @@ export async function createRevenue(input: RevenueCreateInput) {
     if (!customer) throw new HttpError("Cliente no existe en esta empresa", 400, "CUSTOMER_INVALID");
   }
 
+  const inventoryItemId: string | null = input.inventoryItemId ?? null;
+  if (inventoryItemId) {
+    const item = await prisma.inventoryItem.findFirst({
+      where: { id: inventoryItemId, companyId: input.companyId },
+      select: { id: true },
+    });
+    if (!item) throw new HttpError("Producto de inventario no existe en esta empresa", 400, "INVENTORY_ITEM_INVALID");
+  }
+
   const qty = input.quantity;
   if (qty !== undefined && qty !== null && (!Number.isInteger(qty) || qty < 0)) {
     throw new HttpError("Cantidad inválida", 400, "QUANTITY_INVALID");
@@ -107,36 +119,68 @@ export async function createRevenue(input: RevenueCreateInput) {
     throw new HttpError("Precio unitario inválido", 400, "UNIT_PRICE_INVALID");
   }
 
-  const row = await prisma.revenue.create({
-    data: {
-      companyId: input.companyId,
-      customerId,
-      occurredAt: input.occurredAt,
-      amountCents: centsToBigInt(input.amountCents),
-      currency: normalizeCurrency(input.currency),
-      description: input.description?.trim() || null,
-      paymentMethod: input.paymentMethod ? sanitizeText(input.paymentMethod, { maxLen: 40 }) : null,
-      reference: input.reference ? sanitizeText(input.reference, { maxLen: 120 }) : null,
-      channel: input.channel ? sanitizeText(input.channel, { maxLen: 40 }) : null,
-      quantity: qty ?? null,
-      unitPriceCents: nullableCentsToBigInt(unitPc ?? null),
-    },
-    select: {
-      id: true,
-      occurredAt: true,
-      amountCents: true,
-      currency: true,
-      description: true,
-      paymentMethod: true,
-      reference: true,
-      channel: true,
-      quantity: true,
-      unitPriceCents: true,
-      customerId: true,
-      createdAt: true,
-    },
+  return prisma.$transaction(async (tx) => {
+    const row = await tx.revenue.create({
+      data: {
+        companyId: input.companyId,
+        customerId,
+        occurredAt: input.occurredAt,
+        amountCents: centsToBigInt(input.amountCents),
+        currency: normalizeCurrency(input.currency),
+        description: input.description?.trim() || null,
+        paymentMethod: input.paymentMethod ? sanitizeText(input.paymentMethod, { maxLen: 40 }) : null,
+        reference: input.reference ? sanitizeText(input.reference, { maxLen: 120 }) : null,
+        channel: input.channel ? sanitizeText(input.channel, { maxLen: 40 }) : null,
+        quantity: qty ?? null,
+        unitPriceCents: nullableCentsToBigInt(unitPc ?? null),
+        inventoryItemId,
+      },
+      select: {
+        id: true,
+        occurredAt: true,
+        amountCents: true,
+        currency: true,
+        description: true,
+        paymentMethod: true,
+        reference: true,
+        channel: true,
+        quantity: true,
+        unitPriceCents: true,
+        customerId: true,
+        inventoryItemId: true,
+        createdAt: true,
+      },
+    });
+
+    // Si se especifica un item de inventario y cantidad, crear movimiento de salida
+    if (inventoryItemId && qty !== null && qty !== undefined && qty > 0) {
+      const item = await tx.inventoryItem.findUnique({
+        where: { id: inventoryItemId },
+        select: { quantityOnHand: true },
+      });
+      if (!item) throw new HttpError("Producto no encontrado", 400, "ITEM_NOT_FOUND");
+      if (item.quantityOnHand < qty) {
+        throw new HttpError("Stock insuficiente para esta venta", 400, "INSUFFICIENT_STOCK");
+      }
+
+      await tx.inventoryMovement.create({
+        data: {
+          companyId: input.companyId,
+          itemId: inventoryItemId,
+          direction: "OUT",
+          quantity: qty,
+          occurredAt: input.occurredAt,
+          note: `Venta: ${input.description || 'Sin descripción'}`,
+        },
+      });
+      await tx.inventoryItem.update({
+        where: { id: inventoryItemId },
+        data: { quantityOnHand: { decrement: qty } },
+      });
+    }
+
+    return mapRevenueRow(row);
   });
-  return mapRevenueRow(row);
 }
 
 export async function updateRevenue(params: {

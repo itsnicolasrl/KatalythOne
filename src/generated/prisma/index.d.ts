@@ -114,6 +114,11 @@ export type Recommendation = $Result.DefaultSelection<Prisma.$RecommendationPayl
  */
 export type SimulationRun = $Result.DefaultSelection<Prisma.$SimulationRunPayload>
 /**
+ * Model AiDocument
+ * 
+ */
+export type AiDocument = $Result.DefaultSelection<Prisma.$AiDocumentPayload>
+/**
  * Model LearningProgress
  * 
  */
@@ -256,13 +261,7 @@ export const SimulationScenarioType: {
   PRICE_CHANGE: 'PRICE_CHANGE',
   COST_INCREASE: 'COST_INCREASE',
   NEW_PRODUCT: 'NEW_PRODUCT',
-  CUSTOMER_CHURN: 'CUSTOMER_CHURN',
-  MARKET_EXPANSION: 'MARKET_EXPANSION',
-  MARKETING_CAMPAIGN: 'MARKETING_CAMPAIGN',
-  BREAK_EVEN: 'BREAK_EVEN',
-  DOWNTURN: 'DOWNTURN',
-  SEASONAL: 'SEASONAL',
-  MULTI_VARIABLE: 'MULTI_VARIABLE'
+  CONTRACTING: 'CONTRACTING'
 };
 
 export type SimulationScenarioType = (typeof SimulationScenarioType)[keyof typeof SimulationScenarioType]
@@ -806,6 +805,16 @@ export class PrismaClient<
     * ```
     */
   get simulationRun(): Prisma.SimulationRunDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.aiDocument`: Exposes CRUD operations for the **AiDocument** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AiDocuments
+    * const aiDocuments = await prisma.aiDocument.findMany()
+    * ```
+    */
+  get aiDocument(): Prisma.AiDocumentDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.learningProgress`: Exposes CRUD operations for the **LearningProgress** model.
@@ -1420,6 +1429,7 @@ export namespace Prisma {
     Alert: 'Alert',
     Recommendation: 'Recommendation',
     SimulationRun: 'SimulationRun',
+    AiDocument: 'AiDocument',
     LearningProgress: 'LearningProgress',
     RefreshToken: 'RefreshToken',
     Permission: 'Permission',
@@ -1451,7 +1461,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userSubscription" | "company" | "project" | "task" | "taskEvent" | "companyUser" | "companyInvite" | "customer" | "revenue" | "expense" | "inventoryItem" | "inventoryMovement" | "operation" | "process" | "processStep" | "metricSnapshot" | "alert" | "recommendation" | "simulationRun" | "learningProgress" | "refreshToken" | "permission" | "rolePermission" | "onboardingSession" | "onboardingAnswer" | "companyOnboardingProfile" | "revenueStreamTemplate" | "expenseCategoryTemplate" | "calendarEvent" | "projectTimeEntry" | "supplier" | "purchaseOrder" | "purchaseOrderItem" | "purchaseReceipt" | "purchaseReceiptItem"
+      modelProps: "user" | "userSubscription" | "company" | "project" | "task" | "taskEvent" | "companyUser" | "companyInvite" | "customer" | "revenue" | "expense" | "inventoryItem" | "inventoryMovement" | "operation" | "process" | "processStep" | "metricSnapshot" | "alert" | "recommendation" | "simulationRun" | "aiDocument" | "learningProgress" | "refreshToken" | "permission" | "rolePermission" | "onboardingSession" | "onboardingAnswer" | "companyOnboardingProfile" | "revenueStreamTemplate" | "expenseCategoryTemplate" | "calendarEvent" | "projectTimeEntry" | "supplier" | "purchaseOrder" | "purchaseOrderItem" | "purchaseReceipt" | "purchaseReceiptItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2935,6 +2945,80 @@ export namespace Prisma {
           }
         }
       }
+      AiDocument: {
+        payload: Prisma.$AiDocumentPayload<ExtArgs>
+        fields: Prisma.AiDocumentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AiDocumentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AiDocumentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>
+          }
+          findFirst: {
+            args: Prisma.AiDocumentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AiDocumentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>
+          }
+          findMany: {
+            args: Prisma.AiDocumentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>[]
+          }
+          create: {
+            args: Prisma.AiDocumentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>
+          }
+          createMany: {
+            args: Prisma.AiDocumentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AiDocumentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>[]
+          }
+          delete: {
+            args: Prisma.AiDocumentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>
+          }
+          update: {
+            args: Prisma.AiDocumentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>
+          }
+          deleteMany: {
+            args: Prisma.AiDocumentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AiDocumentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AiDocumentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>[]
+          }
+          upsert: {
+            args: Prisma.AiDocumentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiDocumentPayload>
+          }
+          aggregate: {
+            args: Prisma.AiDocumentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAiDocument>
+          }
+          groupBy: {
+            args: Prisma.AiDocumentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AiDocumentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AiDocumentCountArgs<ExtArgs>
+            result: $Utils.Optional<AiDocumentCountAggregateOutputType> | number
+          }
+        }
+      }
       LearningProgress: {
         payload: Prisma.$LearningProgressPayload<ExtArgs>
         fields: Prisma.LearningProgressFieldRefs
@@ -4247,6 +4331,7 @@ export namespace Prisma {
     alert?: AlertOmit
     recommendation?: RecommendationOmit
     simulationRun?: SimulationRunOmit
+    aiDocument?: AiDocumentOmit
     learningProgress?: LearningProgressOmit
     refreshToken?: RefreshTokenOmit
     permission?: PermissionOmit
@@ -4868,10 +4953,12 @@ export namespace Prisma {
 
   export type InventoryItemCountOutputType = {
     movements: number
+    revenues: number
   }
 
   export type InventoryItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     movements?: boolean | InventoryItemCountOutputTypeCountMovementsArgs
+    revenues?: boolean | InventoryItemCountOutputTypeCountRevenuesArgs
   }
 
   // Custom InputTypes
@@ -4890,6 +4977,13 @@ export namespace Prisma {
    */
   export type InventoryItemCountOutputTypeCountMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InventoryMovementWhereInput
+  }
+
+  /**
+   * InventoryItemCountOutputType without action
+   */
+  export type InventoryItemCountOutputTypeCountRevenuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RevenueWhereInput
   }
 
 
@@ -17075,6 +17169,7 @@ export namespace Prisma {
     quantity: number | null
     unitPriceCents: bigint | null
     projectId: string | null
+    inventoryItemId: string | null
     createdAt: Date | null
   }
 
@@ -17092,6 +17187,7 @@ export namespace Prisma {
     quantity: number | null
     unitPriceCents: bigint | null
     projectId: string | null
+    inventoryItemId: string | null
     createdAt: Date | null
   }
 
@@ -17109,6 +17205,7 @@ export namespace Prisma {
     quantity: number
     unitPriceCents: number
     projectId: number
+    inventoryItemId: number
     createdAt: number
     _all: number
   }
@@ -17140,6 +17237,7 @@ export namespace Prisma {
     quantity?: true
     unitPriceCents?: true
     projectId?: true
+    inventoryItemId?: true
     createdAt?: true
   }
 
@@ -17157,6 +17255,7 @@ export namespace Prisma {
     quantity?: true
     unitPriceCents?: true
     projectId?: true
+    inventoryItemId?: true
     createdAt?: true
   }
 
@@ -17174,6 +17273,7 @@ export namespace Prisma {
     quantity?: true
     unitPriceCents?: true
     projectId?: true
+    inventoryItemId?: true
     createdAt?: true
     _all?: true
   }
@@ -17278,6 +17378,7 @@ export namespace Prisma {
     quantity: number | null
     unitPriceCents: bigint | null
     projectId: string | null
+    inventoryItemId: string | null
     createdAt: Date
     _count: RevenueCountAggregateOutputType | null
     _avg: RevenueAvgAggregateOutputType | null
@@ -17314,10 +17415,12 @@ export namespace Prisma {
     quantity?: boolean
     unitPriceCents?: boolean
     projectId?: boolean
+    inventoryItemId?: boolean
     createdAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     customer?: boolean | Revenue$customerArgs<ExtArgs>
     project?: boolean | Revenue$projectArgs<ExtArgs>
+    inventoryItem?: boolean | Revenue$inventoryItemArgs<ExtArgs>
   }, ExtArgs["result"]["revenue"]>
 
   export type RevenueSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17334,10 +17437,12 @@ export namespace Prisma {
     quantity?: boolean
     unitPriceCents?: boolean
     projectId?: boolean
+    inventoryItemId?: boolean
     createdAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     customer?: boolean | Revenue$customerArgs<ExtArgs>
     project?: boolean | Revenue$projectArgs<ExtArgs>
+    inventoryItem?: boolean | Revenue$inventoryItemArgs<ExtArgs>
   }, ExtArgs["result"]["revenue"]>
 
   export type RevenueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17354,10 +17459,12 @@ export namespace Prisma {
     quantity?: boolean
     unitPriceCents?: boolean
     projectId?: boolean
+    inventoryItemId?: boolean
     createdAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     customer?: boolean | Revenue$customerArgs<ExtArgs>
     project?: boolean | Revenue$projectArgs<ExtArgs>
+    inventoryItem?: boolean | Revenue$inventoryItemArgs<ExtArgs>
   }, ExtArgs["result"]["revenue"]>
 
   export type RevenueSelectScalar = {
@@ -17374,24 +17481,28 @@ export namespace Prisma {
     quantity?: boolean
     unitPriceCents?: boolean
     projectId?: boolean
+    inventoryItemId?: boolean
     createdAt?: boolean
   }
 
-  export type RevenueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "customerId" | "occurredAt" | "amountCents" | "currency" | "description" | "paymentMethod" | "reference" | "channel" | "quantity" | "unitPriceCents" | "projectId" | "createdAt", ExtArgs["result"]["revenue"]>
+  export type RevenueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "customerId" | "occurredAt" | "amountCents" | "currency" | "description" | "paymentMethod" | "reference" | "channel" | "quantity" | "unitPriceCents" | "projectId" | "inventoryItemId" | "createdAt", ExtArgs["result"]["revenue"]>
   export type RevenueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     customer?: boolean | Revenue$customerArgs<ExtArgs>
     project?: boolean | Revenue$projectArgs<ExtArgs>
+    inventoryItem?: boolean | Revenue$inventoryItemArgs<ExtArgs>
   }
   export type RevenueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     customer?: boolean | Revenue$customerArgs<ExtArgs>
     project?: boolean | Revenue$projectArgs<ExtArgs>
+    inventoryItem?: boolean | Revenue$inventoryItemArgs<ExtArgs>
   }
   export type RevenueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     customer?: boolean | Revenue$customerArgs<ExtArgs>
     project?: boolean | Revenue$projectArgs<ExtArgs>
+    inventoryItem?: boolean | Revenue$inventoryItemArgs<ExtArgs>
   }
 
   export type $RevenuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17400,6 +17511,7 @@ export namespace Prisma {
       company: Prisma.$CompanyPayload<ExtArgs>
       customer: Prisma.$CustomerPayload<ExtArgs> | null
       project: Prisma.$ProjectPayload<ExtArgs> | null
+      inventoryItem: Prisma.$InventoryItemPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -17415,6 +17527,7 @@ export namespace Prisma {
       quantity: number | null
       unitPriceCents: bigint | null
       projectId: string | null
+      inventoryItemId: string | null
       createdAt: Date
     }, ExtArgs["result"]["revenue"]>
     composites: {}
@@ -17813,6 +17926,7 @@ export namespace Prisma {
     company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     customer<T extends Revenue$customerArgs<ExtArgs> = {}>(args?: Subset<T, Revenue$customerArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     project<T extends Revenue$projectArgs<ExtArgs> = {}>(args?: Subset<T, Revenue$projectArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    inventoryItem<T extends Revenue$inventoryItemArgs<ExtArgs> = {}>(args?: Subset<T, Revenue$inventoryItemArgs<ExtArgs>>): Prisma__InventoryItemClient<$Result.GetResult<Prisma.$InventoryItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17855,6 +17969,7 @@ export namespace Prisma {
     readonly quantity: FieldRef<"Revenue", 'Int'>
     readonly unitPriceCents: FieldRef<"Revenue", 'BigInt'>
     readonly projectId: FieldRef<"Revenue", 'String'>
+    readonly inventoryItemId: FieldRef<"Revenue", 'String'>
     readonly createdAt: FieldRef<"Revenue", 'DateTime'>
   }
     
@@ -18292,6 +18407,25 @@ export namespace Prisma {
      */
     include?: ProjectInclude<ExtArgs> | null
     where?: ProjectWhereInput
+  }
+
+  /**
+   * Revenue.inventoryItem
+   */
+  export type Revenue$inventoryItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryItem
+     */
+    select?: InventoryItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryItem
+     */
+    omit?: InventoryItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryItemInclude<ExtArgs> | null
+    where?: InventoryItemWhereInput
   }
 
   /**
@@ -19784,6 +19918,7 @@ export namespace Prisma {
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     movements?: boolean | InventoryItem$movementsArgs<ExtArgs>
+    revenues?: boolean | InventoryItem$revenuesArgs<ExtArgs>
     _count?: boolean | InventoryItemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["inventoryItem"]>
 
@@ -19835,6 +19970,7 @@ export namespace Prisma {
   export type InventoryItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     movements?: boolean | InventoryItem$movementsArgs<ExtArgs>
+    revenues?: boolean | InventoryItem$revenuesArgs<ExtArgs>
     _count?: boolean | InventoryItemCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type InventoryItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19849,6 +19985,7 @@ export namespace Prisma {
     objects: {
       company: Prisma.$CompanyPayload<ExtArgs>
       movements: Prisma.$InventoryMovementPayload<ExtArgs>[]
+      revenues: Prisma.$RevenuePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -20258,6 +20395,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     movements<T extends InventoryItem$movementsArgs<ExtArgs> = {}>(args?: Subset<T, InventoryItem$movementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    revenues<T extends InventoryItem$revenuesArgs<ExtArgs> = {}>(args?: Subset<T, InventoryItem$revenuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RevenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20720,6 +20858,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: InventoryMovementScalarFieldEnum | InventoryMovementScalarFieldEnum[]
+  }
+
+  /**
+   * InventoryItem.revenues
+   */
+  export type InventoryItem$revenuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Revenue
+     */
+    select?: RevenueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Revenue
+     */
+    omit?: RevenueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RevenueInclude<ExtArgs> | null
+    where?: RevenueWhereInput
+    orderBy?: RevenueOrderByWithRelationInput | RevenueOrderByWithRelationInput[]
+    cursor?: RevenueWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RevenueScalarFieldEnum | RevenueScalarFieldEnum[]
   }
 
   /**
@@ -28791,110 +28953,62 @@ export namespace Prisma {
 
   export type AggregateSimulationRun = {
     _count: SimulationRunCountAggregateOutputType | null
-    _avg: SimulationRunAvgAggregateOutputType | null
-    _sum: SimulationRunSumAggregateOutputType | null
     _min: SimulationRunMinAggregateOutputType | null
     _max: SimulationRunMaxAggregateOutputType | null
-  }
-
-  export type SimulationRunAvgAggregateOutputType = {
-    timelineMonths: number | null
-  }
-
-  export type SimulationRunSumAggregateOutputType = {
-    timelineMonths: number | null
   }
 
   export type SimulationRunMinAggregateOutputType = {
     id: string | null
     companyId: string | null
     createdByUserId: string | null
-    name: string | null
-    description: string | null
     scenarioType: $Enums.SimulationScenarioType | null
-    timelineMonths: number | null
     createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type SimulationRunMaxAggregateOutputType = {
     id: string | null
     companyId: string | null
     createdByUserId: string | null
-    name: string | null
-    description: string | null
     scenarioType: $Enums.SimulationScenarioType | null
-    timelineMonths: number | null
     createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type SimulationRunCountAggregateOutputType = {
     id: number
     companyId: number
     createdByUserId: number
-    name: number
-    description: number
     scenarioType: number
-    tags: number
     parameters: number
     projection: number
-    sensitivity: number
-    timelineMonths: number
-    comparedWith: number
     createdAt: number
-    updatedAt: number
     _all: number
   }
 
-
-  export type SimulationRunAvgAggregateInputType = {
-    timelineMonths?: true
-  }
-
-  export type SimulationRunSumAggregateInputType = {
-    timelineMonths?: true
-  }
 
   export type SimulationRunMinAggregateInputType = {
     id?: true
     companyId?: true
     createdByUserId?: true
-    name?: true
-    description?: true
     scenarioType?: true
-    timelineMonths?: true
     createdAt?: true
-    updatedAt?: true
   }
 
   export type SimulationRunMaxAggregateInputType = {
     id?: true
     companyId?: true
     createdByUserId?: true
-    name?: true
-    description?: true
     scenarioType?: true
-    timelineMonths?: true
     createdAt?: true
-    updatedAt?: true
   }
 
   export type SimulationRunCountAggregateInputType = {
     id?: true
     companyId?: true
     createdByUserId?: true
-    name?: true
-    description?: true
     scenarioType?: true
-    tags?: true
     parameters?: true
     projection?: true
-    sensitivity?: true
-    timelineMonths?: true
-    comparedWith?: true
     createdAt?: true
-    updatedAt?: true
     _all?: true
   }
 
@@ -28936,18 +29050,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: SimulationRunAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: SimulationRunSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: SimulationRunMinAggregateInputType
@@ -28978,8 +29080,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: SimulationRunCountAggregateInputType | true
-    _avg?: SimulationRunAvgAggregateInputType
-    _sum?: SimulationRunSumAggregateInputType
     _min?: SimulationRunMinAggregateInputType
     _max?: SimulationRunMaxAggregateInputType
   }
@@ -28988,20 +29088,11 @@ export namespace Prisma {
     id: string
     companyId: string
     createdByUserId: string | null
-    name: string | null
-    description: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags: string[]
     parameters: JsonValue
     projection: JsonValue
-    sensitivity: JsonValue | null
-    timelineMonths: number
-    comparedWith: string[]
     createdAt: Date
-    updatedAt: Date
     _count: SimulationRunCountAggregateOutputType | null
-    _avg: SimulationRunAvgAggregateOutputType | null
-    _sum: SimulationRunSumAggregateOutputType | null
     _min: SimulationRunMinAggregateOutputType | null
     _max: SimulationRunMaxAggregateOutputType | null
   }
@@ -29024,17 +29115,10 @@ export namespace Prisma {
     id?: boolean
     companyId?: boolean
     createdByUserId?: boolean
-    name?: boolean
-    description?: boolean
     scenarioType?: boolean
-    tags?: boolean
     parameters?: boolean
     projection?: boolean
-    sensitivity?: boolean
-    timelineMonths?: boolean
-    comparedWith?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     createdByUser?: boolean | SimulationRun$createdByUserArgs<ExtArgs>
   }, ExtArgs["result"]["simulationRun"]>
@@ -29043,17 +29127,10 @@ export namespace Prisma {
     id?: boolean
     companyId?: boolean
     createdByUserId?: boolean
-    name?: boolean
-    description?: boolean
     scenarioType?: boolean
-    tags?: boolean
     parameters?: boolean
     projection?: boolean
-    sensitivity?: boolean
-    timelineMonths?: boolean
-    comparedWith?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     createdByUser?: boolean | SimulationRun$createdByUserArgs<ExtArgs>
   }, ExtArgs["result"]["simulationRun"]>
@@ -29062,17 +29139,10 @@ export namespace Prisma {
     id?: boolean
     companyId?: boolean
     createdByUserId?: boolean
-    name?: boolean
-    description?: boolean
     scenarioType?: boolean
-    tags?: boolean
     parameters?: boolean
     projection?: boolean
-    sensitivity?: boolean
-    timelineMonths?: boolean
-    comparedWith?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     createdByUser?: boolean | SimulationRun$createdByUserArgs<ExtArgs>
   }, ExtArgs["result"]["simulationRun"]>
@@ -29081,20 +29151,13 @@ export namespace Prisma {
     id?: boolean
     companyId?: boolean
     createdByUserId?: boolean
-    name?: boolean
-    description?: boolean
     scenarioType?: boolean
-    tags?: boolean
     parameters?: boolean
     projection?: boolean
-    sensitivity?: boolean
-    timelineMonths?: boolean
-    comparedWith?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
   }
 
-  export type SimulationRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "createdByUserId" | "name" | "description" | "scenarioType" | "tags" | "parameters" | "projection" | "sensitivity" | "timelineMonths" | "comparedWith" | "createdAt" | "updatedAt", ExtArgs["result"]["simulationRun"]>
+  export type SimulationRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "createdByUserId" | "scenarioType" | "parameters" | "projection" | "createdAt", ExtArgs["result"]["simulationRun"]>
   export type SimulationRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     createdByUser?: boolean | SimulationRun$createdByUserArgs<ExtArgs>
@@ -29118,17 +29181,10 @@ export namespace Prisma {
       id: string
       companyId: string
       createdByUserId: string | null
-      name: string | null
-      description: string | null
       scenarioType: $Enums.SimulationScenarioType
-      tags: string[]
       parameters: Prisma.JsonValue
       projection: Prisma.JsonValue
-      sensitivity: Prisma.JsonValue | null
-      timelineMonths: number
-      comparedWith: string[]
       createdAt: Date
-      updatedAt: Date
     }, ExtArgs["result"]["simulationRun"]>
     composites: {}
   }
@@ -29557,17 +29613,10 @@ export namespace Prisma {
     readonly id: FieldRef<"SimulationRun", 'String'>
     readonly companyId: FieldRef<"SimulationRun", 'String'>
     readonly createdByUserId: FieldRef<"SimulationRun", 'String'>
-    readonly name: FieldRef<"SimulationRun", 'String'>
-    readonly description: FieldRef<"SimulationRun", 'String'>
     readonly scenarioType: FieldRef<"SimulationRun", 'SimulationScenarioType'>
-    readonly tags: FieldRef<"SimulationRun", 'String[]'>
     readonly parameters: FieldRef<"SimulationRun", 'Json'>
     readonly projection: FieldRef<"SimulationRun", 'Json'>
-    readonly sensitivity: FieldRef<"SimulationRun", 'Json'>
-    readonly timelineMonths: FieldRef<"SimulationRun", 'Int'>
-    readonly comparedWith: FieldRef<"SimulationRun", 'String[]'>
     readonly createdAt: FieldRef<"SimulationRun", 'DateTime'>
-    readonly updatedAt: FieldRef<"SimulationRun", 'DateTime'>
   }
     
 
@@ -30003,6 +30052,1015 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SimulationRunInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AiDocument
+   */
+
+  export type AggregateAiDocument = {
+    _count: AiDocumentCountAggregateOutputType | null
+    _min: AiDocumentMinAggregateOutputType | null
+    _max: AiDocumentMaxAggregateOutputType | null
+  }
+
+  export type AiDocumentMinAggregateOutputType = {
+    id: string | null
+    companyId: string | null
+    source: string | null
+    content: string | null
+    createdAt: Date | null
+  }
+
+  export type AiDocumentMaxAggregateOutputType = {
+    id: string | null
+    companyId: string | null
+    source: string | null
+    content: string | null
+    createdAt: Date | null
+  }
+
+  export type AiDocumentCountAggregateOutputType = {
+    id: number
+    companyId: number
+    source: number
+    content: number
+    embedding: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AiDocumentMinAggregateInputType = {
+    id?: true
+    companyId?: true
+    source?: true
+    content?: true
+    createdAt?: true
+  }
+
+  export type AiDocumentMaxAggregateInputType = {
+    id?: true
+    companyId?: true
+    source?: true
+    content?: true
+    createdAt?: true
+  }
+
+  export type AiDocumentCountAggregateInputType = {
+    id?: true
+    companyId?: true
+    source?: true
+    content?: true
+    embedding?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AiDocumentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiDocument to aggregate.
+     */
+    where?: AiDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDocuments to fetch.
+     */
+    orderBy?: AiDocumentOrderByWithRelationInput | AiDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AiDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AiDocuments
+    **/
+    _count?: true | AiDocumentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AiDocumentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AiDocumentMaxAggregateInputType
+  }
+
+  export type GetAiDocumentAggregateType<T extends AiDocumentAggregateArgs> = {
+        [P in keyof T & keyof AggregateAiDocument]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAiDocument[P]>
+      : GetScalarType<T[P], AggregateAiDocument[P]>
+  }
+
+
+
+
+  export type AiDocumentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiDocumentWhereInput
+    orderBy?: AiDocumentOrderByWithAggregationInput | AiDocumentOrderByWithAggregationInput[]
+    by: AiDocumentScalarFieldEnum[] | AiDocumentScalarFieldEnum
+    having?: AiDocumentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AiDocumentCountAggregateInputType | true
+    _min?: AiDocumentMinAggregateInputType
+    _max?: AiDocumentMaxAggregateInputType
+  }
+
+  export type AiDocumentGroupByOutputType = {
+    id: string
+    companyId: string
+    source: string
+    content: string
+    embedding: JsonValue | null
+    createdAt: Date
+    _count: AiDocumentCountAggregateOutputType | null
+    _min: AiDocumentMinAggregateOutputType | null
+    _max: AiDocumentMaxAggregateOutputType | null
+  }
+
+  type GetAiDocumentGroupByPayload<T extends AiDocumentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AiDocumentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AiDocumentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AiDocumentGroupByOutputType[P]>
+            : GetScalarType<T[P], AiDocumentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AiDocumentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    companyId?: boolean
+    source?: boolean
+    content?: boolean
+    embedding?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["aiDocument"]>
+
+  export type AiDocumentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    companyId?: boolean
+    source?: boolean
+    content?: boolean
+    embedding?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["aiDocument"]>
+
+  export type AiDocumentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    companyId?: boolean
+    source?: boolean
+    content?: boolean
+    embedding?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["aiDocument"]>
+
+  export type AiDocumentSelectScalar = {
+    id?: boolean
+    companyId?: boolean
+    source?: boolean
+    content?: boolean
+    embedding?: boolean
+    createdAt?: boolean
+  }
+
+  export type AiDocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "source" | "content" | "embedding" | "createdAt", ExtArgs["result"]["aiDocument"]>
+
+  export type $AiDocumentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AiDocument"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      companyId: string
+      source: string
+      content: string
+      embedding: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["aiDocument"]>
+    composites: {}
+  }
+
+  type AiDocumentGetPayload<S extends boolean | null | undefined | AiDocumentDefaultArgs> = $Result.GetResult<Prisma.$AiDocumentPayload, S>
+
+  type AiDocumentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AiDocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AiDocumentCountAggregateInputType | true
+    }
+
+  export interface AiDocumentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AiDocument'], meta: { name: 'AiDocument' } }
+    /**
+     * Find zero or one AiDocument that matches the filter.
+     * @param {AiDocumentFindUniqueArgs} args - Arguments to find a AiDocument
+     * @example
+     * // Get one AiDocument
+     * const aiDocument = await prisma.aiDocument.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AiDocumentFindUniqueArgs>(args: SelectSubset<T, AiDocumentFindUniqueArgs<ExtArgs>>): Prisma__AiDocumentClient<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AiDocument that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AiDocumentFindUniqueOrThrowArgs} args - Arguments to find a AiDocument
+     * @example
+     * // Get one AiDocument
+     * const aiDocument = await prisma.aiDocument.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AiDocumentFindUniqueOrThrowArgs>(args: SelectSubset<T, AiDocumentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AiDocumentClient<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiDocument that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDocumentFindFirstArgs} args - Arguments to find a AiDocument
+     * @example
+     * // Get one AiDocument
+     * const aiDocument = await prisma.aiDocument.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AiDocumentFindFirstArgs>(args?: SelectSubset<T, AiDocumentFindFirstArgs<ExtArgs>>): Prisma__AiDocumentClient<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiDocument that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDocumentFindFirstOrThrowArgs} args - Arguments to find a AiDocument
+     * @example
+     * // Get one AiDocument
+     * const aiDocument = await prisma.aiDocument.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AiDocumentFindFirstOrThrowArgs>(args?: SelectSubset<T, AiDocumentFindFirstOrThrowArgs<ExtArgs>>): Prisma__AiDocumentClient<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AiDocuments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDocumentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AiDocuments
+     * const aiDocuments = await prisma.aiDocument.findMany()
+     * 
+     * // Get first 10 AiDocuments
+     * const aiDocuments = await prisma.aiDocument.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aiDocumentWithIdOnly = await prisma.aiDocument.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AiDocumentFindManyArgs>(args?: SelectSubset<T, AiDocumentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AiDocument.
+     * @param {AiDocumentCreateArgs} args - Arguments to create a AiDocument.
+     * @example
+     * // Create one AiDocument
+     * const AiDocument = await prisma.aiDocument.create({
+     *   data: {
+     *     // ... data to create a AiDocument
+     *   }
+     * })
+     * 
+     */
+    create<T extends AiDocumentCreateArgs>(args: SelectSubset<T, AiDocumentCreateArgs<ExtArgs>>): Prisma__AiDocumentClient<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AiDocuments.
+     * @param {AiDocumentCreateManyArgs} args - Arguments to create many AiDocuments.
+     * @example
+     * // Create many AiDocuments
+     * const aiDocument = await prisma.aiDocument.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AiDocumentCreateManyArgs>(args?: SelectSubset<T, AiDocumentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AiDocuments and returns the data saved in the database.
+     * @param {AiDocumentCreateManyAndReturnArgs} args - Arguments to create many AiDocuments.
+     * @example
+     * // Create many AiDocuments
+     * const aiDocument = await prisma.aiDocument.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AiDocuments and only return the `id`
+     * const aiDocumentWithIdOnly = await prisma.aiDocument.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AiDocumentCreateManyAndReturnArgs>(args?: SelectSubset<T, AiDocumentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AiDocument.
+     * @param {AiDocumentDeleteArgs} args - Arguments to delete one AiDocument.
+     * @example
+     * // Delete one AiDocument
+     * const AiDocument = await prisma.aiDocument.delete({
+     *   where: {
+     *     // ... filter to delete one AiDocument
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AiDocumentDeleteArgs>(args: SelectSubset<T, AiDocumentDeleteArgs<ExtArgs>>): Prisma__AiDocumentClient<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AiDocument.
+     * @param {AiDocumentUpdateArgs} args - Arguments to update one AiDocument.
+     * @example
+     * // Update one AiDocument
+     * const aiDocument = await prisma.aiDocument.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AiDocumentUpdateArgs>(args: SelectSubset<T, AiDocumentUpdateArgs<ExtArgs>>): Prisma__AiDocumentClient<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AiDocuments.
+     * @param {AiDocumentDeleteManyArgs} args - Arguments to filter AiDocuments to delete.
+     * @example
+     * // Delete a few AiDocuments
+     * const { count } = await prisma.aiDocument.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AiDocumentDeleteManyArgs>(args?: SelectSubset<T, AiDocumentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiDocuments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDocumentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AiDocuments
+     * const aiDocument = await prisma.aiDocument.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AiDocumentUpdateManyArgs>(args: SelectSubset<T, AiDocumentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiDocuments and returns the data updated in the database.
+     * @param {AiDocumentUpdateManyAndReturnArgs} args - Arguments to update many AiDocuments.
+     * @example
+     * // Update many AiDocuments
+     * const aiDocument = await prisma.aiDocument.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AiDocuments and only return the `id`
+     * const aiDocumentWithIdOnly = await prisma.aiDocument.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AiDocumentUpdateManyAndReturnArgs>(args: SelectSubset<T, AiDocumentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AiDocument.
+     * @param {AiDocumentUpsertArgs} args - Arguments to update or create a AiDocument.
+     * @example
+     * // Update or create a AiDocument
+     * const aiDocument = await prisma.aiDocument.upsert({
+     *   create: {
+     *     // ... data to create a AiDocument
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AiDocument we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AiDocumentUpsertArgs>(args: SelectSubset<T, AiDocumentUpsertArgs<ExtArgs>>): Prisma__AiDocumentClient<$Result.GetResult<Prisma.$AiDocumentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AiDocuments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDocumentCountArgs} args - Arguments to filter AiDocuments to count.
+     * @example
+     * // Count the number of AiDocuments
+     * const count = await prisma.aiDocument.count({
+     *   where: {
+     *     // ... the filter for the AiDocuments we want to count
+     *   }
+     * })
+    **/
+    count<T extends AiDocumentCountArgs>(
+      args?: Subset<T, AiDocumentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AiDocumentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AiDocument.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDocumentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AiDocumentAggregateArgs>(args: Subset<T, AiDocumentAggregateArgs>): Prisma.PrismaPromise<GetAiDocumentAggregateType<T>>
+
+    /**
+     * Group by AiDocument.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiDocumentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AiDocumentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AiDocumentGroupByArgs['orderBy'] }
+        : { orderBy?: AiDocumentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AiDocumentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAiDocumentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AiDocument model
+   */
+  readonly fields: AiDocumentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AiDocument.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AiDocumentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AiDocument model
+   */
+  interface AiDocumentFieldRefs {
+    readonly id: FieldRef<"AiDocument", 'String'>
+    readonly companyId: FieldRef<"AiDocument", 'String'>
+    readonly source: FieldRef<"AiDocument", 'String'>
+    readonly content: FieldRef<"AiDocument", 'String'>
+    readonly embedding: FieldRef<"AiDocument", 'Json'>
+    readonly createdAt: FieldRef<"AiDocument", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AiDocument findUnique
+   */
+  export type AiDocumentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which AiDocument to fetch.
+     */
+    where: AiDocumentWhereUniqueInput
+  }
+
+  /**
+   * AiDocument findUniqueOrThrow
+   */
+  export type AiDocumentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which AiDocument to fetch.
+     */
+    where: AiDocumentWhereUniqueInput
+  }
+
+  /**
+   * AiDocument findFirst
+   */
+  export type AiDocumentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which AiDocument to fetch.
+     */
+    where?: AiDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDocuments to fetch.
+     */
+    orderBy?: AiDocumentOrderByWithRelationInput | AiDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiDocuments.
+     */
+    cursor?: AiDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDocuments.
+     */
+    distinct?: AiDocumentScalarFieldEnum | AiDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * AiDocument findFirstOrThrow
+   */
+  export type AiDocumentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which AiDocument to fetch.
+     */
+    where?: AiDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDocuments to fetch.
+     */
+    orderBy?: AiDocumentOrderByWithRelationInput | AiDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiDocuments.
+     */
+    cursor?: AiDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDocuments.
+     */
+    distinct?: AiDocumentScalarFieldEnum | AiDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * AiDocument findMany
+   */
+  export type AiDocumentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which AiDocuments to fetch.
+     */
+    where?: AiDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiDocuments to fetch.
+     */
+    orderBy?: AiDocumentOrderByWithRelationInput | AiDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AiDocuments.
+     */
+    cursor?: AiDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiDocuments.
+     */
+    distinct?: AiDocumentScalarFieldEnum | AiDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * AiDocument create
+   */
+  export type AiDocumentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AiDocument.
+     */
+    data: XOR<AiDocumentCreateInput, AiDocumentUncheckedCreateInput>
+  }
+
+  /**
+   * AiDocument createMany
+   */
+  export type AiDocumentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AiDocuments.
+     */
+    data: AiDocumentCreateManyInput | AiDocumentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AiDocument createManyAndReturn
+   */
+  export type AiDocumentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * The data used to create many AiDocuments.
+     */
+    data: AiDocumentCreateManyInput | AiDocumentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AiDocument update
+   */
+  export type AiDocumentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AiDocument.
+     */
+    data: XOR<AiDocumentUpdateInput, AiDocumentUncheckedUpdateInput>
+    /**
+     * Choose, which AiDocument to update.
+     */
+    where: AiDocumentWhereUniqueInput
+  }
+
+  /**
+   * AiDocument updateMany
+   */
+  export type AiDocumentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AiDocuments.
+     */
+    data: XOR<AiDocumentUpdateManyMutationInput, AiDocumentUncheckedUpdateManyInput>
+    /**
+     * Filter which AiDocuments to update
+     */
+    where?: AiDocumentWhereInput
+    /**
+     * Limit how many AiDocuments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDocument updateManyAndReturn
+   */
+  export type AiDocumentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * The data used to update AiDocuments.
+     */
+    data: XOR<AiDocumentUpdateManyMutationInput, AiDocumentUncheckedUpdateManyInput>
+    /**
+     * Filter which AiDocuments to update
+     */
+    where?: AiDocumentWhereInput
+    /**
+     * Limit how many AiDocuments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDocument upsert
+   */
+  export type AiDocumentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AiDocument to update in case it exists.
+     */
+    where: AiDocumentWhereUniqueInput
+    /**
+     * In case the AiDocument found by the `where` argument doesn't exist, create a new AiDocument with this data.
+     */
+    create: XOR<AiDocumentCreateInput, AiDocumentUncheckedCreateInput>
+    /**
+     * In case the AiDocument was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AiDocumentUpdateInput, AiDocumentUncheckedUpdateInput>
+  }
+
+  /**
+   * AiDocument delete
+   */
+  export type AiDocumentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
+    /**
+     * Filter which AiDocument to delete.
+     */
+    where: AiDocumentWhereUniqueInput
+  }
+
+  /**
+   * AiDocument deleteMany
+   */
+  export type AiDocumentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiDocuments to delete
+     */
+    where?: AiDocumentWhereInput
+    /**
+     * Limit how many AiDocuments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiDocument without action
+   */
+  export type AiDocumentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiDocument
+     */
+    select?: AiDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiDocument
+     */
+    omit?: AiDocumentOmit<ExtArgs> | null
   }
 
 
@@ -48407,6 +49465,7 @@ export namespace Prisma {
     quantity: 'quantity',
     unitPriceCents: 'unitPriceCents',
     projectId: 'projectId',
+    inventoryItemId: 'inventoryItemId',
     createdAt: 'createdAt'
   };
 
@@ -48550,20 +49609,25 @@ export namespace Prisma {
     id: 'id',
     companyId: 'companyId',
     createdByUserId: 'createdByUserId',
-    name: 'name',
-    description: 'description',
     scenarioType: 'scenarioType',
-    tags: 'tags',
     parameters: 'parameters',
     projection: 'projection',
-    sensitivity: 'sensitivity',
-    timelineMonths: 'timelineMonths',
-    comparedWith: 'comparedWith',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    createdAt: 'createdAt'
   };
 
   export type SimulationRunScalarFieldEnum = (typeof SimulationRunScalarFieldEnum)[keyof typeof SimulationRunScalarFieldEnum]
+
+
+  export const AiDocumentScalarFieldEnum: {
+    id: 'id',
+    companyId: 'companyId',
+    source: 'source',
+    content: 'content',
+    embedding: 'embedding',
+    createdAt: 'createdAt'
+  };
+
+  export type AiDocumentScalarFieldEnum = (typeof AiDocumentScalarFieldEnum)[keyof typeof AiDocumentScalarFieldEnum]
 
 
   export const LearningProgressScalarFieldEnum: {
@@ -50141,10 +51205,12 @@ export namespace Prisma {
     quantity?: IntNullableFilter<"Revenue"> | number | null
     unitPriceCents?: BigIntNullableFilter<"Revenue"> | bigint | number | null
     projectId?: StringNullableFilter<"Revenue"> | string | null
+    inventoryItemId?: StringNullableFilter<"Revenue"> | string | null
     createdAt?: DateTimeFilter<"Revenue"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     customer?: XOR<CustomerNullableScalarRelationFilter, CustomerWhereInput> | null
     project?: XOR<ProjectNullableScalarRelationFilter, ProjectWhereInput> | null
+    inventoryItem?: XOR<InventoryItemNullableScalarRelationFilter, InventoryItemWhereInput> | null
   }
 
   export type RevenueOrderByWithRelationInput = {
@@ -50161,10 +51227,12 @@ export namespace Prisma {
     quantity?: SortOrderInput | SortOrder
     unitPriceCents?: SortOrderInput | SortOrder
     projectId?: SortOrderInput | SortOrder
+    inventoryItemId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
     customer?: CustomerOrderByWithRelationInput
     project?: ProjectOrderByWithRelationInput
+    inventoryItem?: InventoryItemOrderByWithRelationInput
   }
 
   export type RevenueWhereUniqueInput = Prisma.AtLeast<{
@@ -50184,10 +51252,12 @@ export namespace Prisma {
     quantity?: IntNullableFilter<"Revenue"> | number | null
     unitPriceCents?: BigIntNullableFilter<"Revenue"> | bigint | number | null
     projectId?: StringNullableFilter<"Revenue"> | string | null
+    inventoryItemId?: StringNullableFilter<"Revenue"> | string | null
     createdAt?: DateTimeFilter<"Revenue"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     customer?: XOR<CustomerNullableScalarRelationFilter, CustomerWhereInput> | null
     project?: XOR<ProjectNullableScalarRelationFilter, ProjectWhereInput> | null
+    inventoryItem?: XOR<InventoryItemNullableScalarRelationFilter, InventoryItemWhereInput> | null
   }, "id">
 
   export type RevenueOrderByWithAggregationInput = {
@@ -50204,6 +51274,7 @@ export namespace Prisma {
     quantity?: SortOrderInput | SortOrder
     unitPriceCents?: SortOrderInput | SortOrder
     projectId?: SortOrderInput | SortOrder
+    inventoryItemId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: RevenueCountOrderByAggregateInput
     _avg?: RevenueAvgOrderByAggregateInput
@@ -50229,6 +51300,7 @@ export namespace Prisma {
     quantity?: IntNullableWithAggregatesFilter<"Revenue"> | number | null
     unitPriceCents?: BigIntNullableWithAggregatesFilter<"Revenue"> | bigint | number | null
     projectId?: StringNullableWithAggregatesFilter<"Revenue"> | string | null
+    inventoryItemId?: StringNullableWithAggregatesFilter<"Revenue"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Revenue"> | Date | string
   }
 
@@ -50344,6 +51416,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"InventoryItem"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     movements?: InventoryMovementListRelationFilter
+    revenues?: RevenueListRelationFilter
   }
 
   export type InventoryItemOrderByWithRelationInput = {
@@ -50360,6 +51433,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
     movements?: InventoryMovementOrderByRelationAggregateInput
+    revenues?: RevenueOrderByRelationAggregateInput
   }
 
   export type InventoryItemWhereUniqueInput = Prisma.AtLeast<{
@@ -50379,6 +51453,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"InventoryItem"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     movements?: InventoryMovementListRelationFilter
+    revenues?: RevenueListRelationFilter
   }, "id">
 
   export type InventoryItemOrderByWithAggregationInput = {
@@ -50943,17 +52018,10 @@ export namespace Prisma {
     id?: StringFilter<"SimulationRun"> | string
     companyId?: StringFilter<"SimulationRun"> | string
     createdByUserId?: StringNullableFilter<"SimulationRun"> | string | null
-    name?: StringNullableFilter<"SimulationRun"> | string | null
-    description?: StringNullableFilter<"SimulationRun"> | string | null
     scenarioType?: EnumSimulationScenarioTypeFilter<"SimulationRun"> | $Enums.SimulationScenarioType
-    tags?: StringNullableListFilter<"SimulationRun">
     parameters?: JsonFilter<"SimulationRun">
     projection?: JsonFilter<"SimulationRun">
-    sensitivity?: JsonNullableFilter<"SimulationRun">
-    timelineMonths?: IntFilter<"SimulationRun"> | number
-    comparedWith?: StringNullableListFilter<"SimulationRun">
     createdAt?: DateTimeFilter<"SimulationRun"> | Date | string
-    updatedAt?: DateTimeFilter<"SimulationRun"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     createdByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
@@ -50962,17 +52030,10 @@ export namespace Prisma {
     id?: SortOrder
     companyId?: SortOrder
     createdByUserId?: SortOrderInput | SortOrder
-    name?: SortOrderInput | SortOrder
-    description?: SortOrderInput | SortOrder
     scenarioType?: SortOrder
-    tags?: SortOrder
     parameters?: SortOrder
     projection?: SortOrder
-    sensitivity?: SortOrderInput | SortOrder
-    timelineMonths?: SortOrder
-    comparedWith?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
     createdByUser?: UserOrderByWithRelationInput
   }
@@ -50984,17 +52045,10 @@ export namespace Prisma {
     NOT?: SimulationRunWhereInput | SimulationRunWhereInput[]
     companyId?: StringFilter<"SimulationRun"> | string
     createdByUserId?: StringNullableFilter<"SimulationRun"> | string | null
-    name?: StringNullableFilter<"SimulationRun"> | string | null
-    description?: StringNullableFilter<"SimulationRun"> | string | null
     scenarioType?: EnumSimulationScenarioTypeFilter<"SimulationRun"> | $Enums.SimulationScenarioType
-    tags?: StringNullableListFilter<"SimulationRun">
     parameters?: JsonFilter<"SimulationRun">
     projection?: JsonFilter<"SimulationRun">
-    sensitivity?: JsonNullableFilter<"SimulationRun">
-    timelineMonths?: IntFilter<"SimulationRun"> | number
-    comparedWith?: StringNullableListFilter<"SimulationRun">
     createdAt?: DateTimeFilter<"SimulationRun"> | Date | string
-    updatedAt?: DateTimeFilter<"SimulationRun"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     createdByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
@@ -51003,22 +52057,13 @@ export namespace Prisma {
     id?: SortOrder
     companyId?: SortOrder
     createdByUserId?: SortOrderInput | SortOrder
-    name?: SortOrderInput | SortOrder
-    description?: SortOrderInput | SortOrder
     scenarioType?: SortOrder
-    tags?: SortOrder
     parameters?: SortOrder
     projection?: SortOrder
-    sensitivity?: SortOrderInput | SortOrder
-    timelineMonths?: SortOrder
-    comparedWith?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
     _count?: SimulationRunCountOrderByAggregateInput
-    _avg?: SimulationRunAvgOrderByAggregateInput
     _max?: SimulationRunMaxOrderByAggregateInput
     _min?: SimulationRunMinOrderByAggregateInput
-    _sum?: SimulationRunSumOrderByAggregateInput
   }
 
   export type SimulationRunScalarWhereWithAggregatesInput = {
@@ -51028,17 +52073,67 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"SimulationRun"> | string
     companyId?: StringWithAggregatesFilter<"SimulationRun"> | string
     createdByUserId?: StringNullableWithAggregatesFilter<"SimulationRun"> | string | null
-    name?: StringNullableWithAggregatesFilter<"SimulationRun"> | string | null
-    description?: StringNullableWithAggregatesFilter<"SimulationRun"> | string | null
     scenarioType?: EnumSimulationScenarioTypeWithAggregatesFilter<"SimulationRun"> | $Enums.SimulationScenarioType
-    tags?: StringNullableListFilter<"SimulationRun">
     parameters?: JsonWithAggregatesFilter<"SimulationRun">
     projection?: JsonWithAggregatesFilter<"SimulationRun">
-    sensitivity?: JsonNullableWithAggregatesFilter<"SimulationRun">
-    timelineMonths?: IntWithAggregatesFilter<"SimulationRun"> | number
-    comparedWith?: StringNullableListFilter<"SimulationRun">
     createdAt?: DateTimeWithAggregatesFilter<"SimulationRun"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"SimulationRun"> | Date | string
+  }
+
+  export type AiDocumentWhereInput = {
+    AND?: AiDocumentWhereInput | AiDocumentWhereInput[]
+    OR?: AiDocumentWhereInput[]
+    NOT?: AiDocumentWhereInput | AiDocumentWhereInput[]
+    id?: StringFilter<"AiDocument"> | string
+    companyId?: StringFilter<"AiDocument"> | string
+    source?: StringFilter<"AiDocument"> | string
+    content?: StringFilter<"AiDocument"> | string
+    embedding?: JsonNullableFilter<"AiDocument">
+    createdAt?: DateTimeFilter<"AiDocument"> | Date | string
+  }
+
+  export type AiDocumentOrderByWithRelationInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    source?: SortOrder
+    content?: SortOrder
+    embedding?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AiDocumentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AiDocumentWhereInput | AiDocumentWhereInput[]
+    OR?: AiDocumentWhereInput[]
+    NOT?: AiDocumentWhereInput | AiDocumentWhereInput[]
+    companyId?: StringFilter<"AiDocument"> | string
+    source?: StringFilter<"AiDocument"> | string
+    content?: StringFilter<"AiDocument"> | string
+    embedding?: JsonNullableFilter<"AiDocument">
+    createdAt?: DateTimeFilter<"AiDocument"> | Date | string
+  }, "id">
+
+  export type AiDocumentOrderByWithAggregationInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    source?: SortOrder
+    content?: SortOrder
+    embedding?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: AiDocumentCountOrderByAggregateInput
+    _max?: AiDocumentMaxOrderByAggregateInput
+    _min?: AiDocumentMinOrderByAggregateInput
+  }
+
+  export type AiDocumentScalarWhereWithAggregatesInput = {
+    AND?: AiDocumentScalarWhereWithAggregatesInput | AiDocumentScalarWhereWithAggregatesInput[]
+    OR?: AiDocumentScalarWhereWithAggregatesInput[]
+    NOT?: AiDocumentScalarWhereWithAggregatesInput | AiDocumentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AiDocument"> | string
+    companyId?: StringWithAggregatesFilter<"AiDocument"> | string
+    source?: StringWithAggregatesFilter<"AiDocument"> | string
+    content?: StringWithAggregatesFilter<"AiDocument"> | string
+    embedding?: JsonNullableWithAggregatesFilter<"AiDocument">
+    createdAt?: DateTimeWithAggregatesFilter<"AiDocument"> | Date | string
   }
 
   export type LearningProgressWhereInput = {
@@ -53282,6 +54377,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutRevenuesInput
     customer?: CustomerCreateNestedOneWithoutRevenuesInput
     project?: ProjectCreateNestedOneWithoutRevenuesInput
+    inventoryItem?: InventoryItemCreateNestedOneWithoutRevenuesInput
   }
 
   export type RevenueUncheckedCreateInput = {
@@ -53298,6 +54394,7 @@ export namespace Prisma {
     quantity?: number | null
     unitPriceCents?: bigint | number | null
     projectId?: string | null
+    inventoryItemId?: string | null
     createdAt?: Date | string
   }
 
@@ -53316,6 +54413,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutRevenuesNestedInput
     customer?: CustomerUpdateOneWithoutRevenuesNestedInput
     project?: ProjectUpdateOneWithoutRevenuesNestedInput
+    inventoryItem?: InventoryItemUpdateOneWithoutRevenuesNestedInput
   }
 
   export type RevenueUncheckedUpdateInput = {
@@ -53332,6 +54430,7 @@ export namespace Prisma {
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    inventoryItemId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -53349,6 +54448,7 @@ export namespace Prisma {
     quantity?: number | null
     unitPriceCents?: bigint | number | null
     projectId?: string | null
+    inventoryItemId?: string | null
     createdAt?: Date | string
   }
 
@@ -53380,6 +54480,7 @@ export namespace Prisma {
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    inventoryItemId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -53499,6 +54600,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutInventoryItemsInput
     movements?: InventoryMovementCreateNestedManyWithoutItemInput
+    revenues?: RevenueCreateNestedManyWithoutInventoryItemInput
   }
 
   export type InventoryItemUncheckedCreateInput = {
@@ -53514,6 +54616,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movements?: InventoryMovementUncheckedCreateNestedManyWithoutItemInput
+    revenues?: RevenueUncheckedCreateNestedManyWithoutInventoryItemInput
   }
 
   export type InventoryItemUpdateInput = {
@@ -53529,6 +54632,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutInventoryItemsNestedInput
     movements?: InventoryMovementUpdateManyWithoutItemNestedInput
+    revenues?: RevenueUpdateManyWithoutInventoryItemNestedInput
   }
 
   export type InventoryItemUncheckedUpdateInput = {
@@ -53544,6 +54648,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movements?: InventoryMovementUncheckedUpdateManyWithoutItemNestedInput
+    revenues?: RevenueUncheckedUpdateManyWithoutInventoryItemNestedInput
   }
 
   export type InventoryItemCreateManyInput = {
@@ -54134,17 +55239,10 @@ export namespace Prisma {
 
   export type SimulationRunCreateInput = {
     id?: string
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutSimulationsInput
     createdByUser?: UserCreateNestedOneWithoutSimulationsInput
   }
@@ -54153,32 +55251,18 @@ export namespace Prisma {
     id?: string
     companyId: string
     createdByUserId?: string | null
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type SimulationRunUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutSimulationsNestedInput
     createdByUser?: UserUpdateOneWithoutSimulationsNestedInput
   }
@@ -54187,66 +55271,101 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
     createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SimulationRunCreateManyInput = {
     id?: string
     companyId: string
     createdByUserId?: string | null
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type SimulationRunUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SimulationRunUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
     createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDocumentCreateInput = {
+    id?: string
+    companyId: string
+    source: string
+    content: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AiDocumentUncheckedCreateInput = {
+    id?: string
+    companyId: string
+    source: string
+    content: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AiDocumentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    source?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDocumentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    source?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDocumentCreateManyInput = {
+    id?: string
+    companyId: string
+    source: string
+    content: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AiDocumentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    source?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiDocumentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    source?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LearningProgressCreateInput = {
@@ -56465,6 +57584,11 @@ export namespace Prisma {
     isNot?: CustomerWhereInput | null
   }
 
+  export type InventoryItemNullableScalarRelationFilter = {
+    is?: InventoryItemWhereInput | null
+    isNot?: InventoryItemWhereInput | null
+  }
+
   export type RevenueCountOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
@@ -56479,6 +57603,7 @@ export namespace Prisma {
     quantity?: SortOrder
     unitPriceCents?: SortOrder
     projectId?: SortOrder
+    inventoryItemId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -56502,6 +57627,7 @@ export namespace Prisma {
     quantity?: SortOrder
     unitPriceCents?: SortOrder
     projectId?: SortOrder
+    inventoryItemId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -56519,6 +57645,7 @@ export namespace Prisma {
     quantity?: SortOrder
     unitPriceCents?: SortOrder
     projectId?: SortOrder
+    inventoryItemId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -57097,14 +58224,6 @@ export namespace Prisma {
     notIn?: $Enums.SimulationScenarioType[] | ListEnumSimulationScenarioTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumSimulationScenarioTypeFilter<$PrismaModel> | $Enums.SimulationScenarioType
   }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -57128,77 +58247,31 @@ export namespace Prisma {
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
-  export type JsonNullableFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type SimulationRunCountOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
     createdByUserId?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
     scenarioType?: SortOrder
-    tags?: SortOrder
     parameters?: SortOrder
     projection?: SortOrder
-    sensitivity?: SortOrder
-    timelineMonths?: SortOrder
-    comparedWith?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type SimulationRunAvgOrderByAggregateInput = {
-    timelineMonths?: SortOrder
   }
 
   export type SimulationRunMaxOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
     createdByUserId?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
     scenarioType?: SortOrder
-    timelineMonths?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type SimulationRunMinOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
     createdByUserId?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
     scenarioType?: SortOrder
-    timelineMonths?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type SimulationRunSumOrderByAggregateInput = {
-    timelineMonths?: SortOrder
   }
 
   export type EnumSimulationScenarioTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -57235,6 +58308,54 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type AiDocumentCountOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    source?: SortOrder
+    content?: SortOrder
+    embedding?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AiDocumentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    source?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AiDocumentMinOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    source?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -60346,6 +61467,12 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput
   }
 
+  export type InventoryItemCreateNestedOneWithoutRevenuesInput = {
+    create?: XOR<InventoryItemCreateWithoutRevenuesInput, InventoryItemUncheckedCreateWithoutRevenuesInput>
+    connectOrCreate?: InventoryItemCreateOrConnectWithoutRevenuesInput
+    connect?: InventoryItemWhereUniqueInput
+  }
+
   export type BigIntFieldUpdateOperationsInput = {
     set?: bigint | number
     increment?: bigint | number
@@ -60388,6 +61515,16 @@ export namespace Prisma {
     delete?: ProjectWhereInput | boolean
     connect?: ProjectWhereUniqueInput
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutRevenuesInput, ProjectUpdateWithoutRevenuesInput>, ProjectUncheckedUpdateWithoutRevenuesInput>
+  }
+
+  export type InventoryItemUpdateOneWithoutRevenuesNestedInput = {
+    create?: XOR<InventoryItemCreateWithoutRevenuesInput, InventoryItemUncheckedCreateWithoutRevenuesInput>
+    connectOrCreate?: InventoryItemCreateOrConnectWithoutRevenuesInput
+    upsert?: InventoryItemUpsertWithoutRevenuesInput
+    disconnect?: InventoryItemWhereInput | boolean
+    delete?: InventoryItemWhereInput | boolean
+    connect?: InventoryItemWhereUniqueInput
+    update?: XOR<XOR<InventoryItemUpdateToOneWithWhereWithoutRevenuesInput, InventoryItemUpdateWithoutRevenuesInput>, InventoryItemUncheckedUpdateWithoutRevenuesInput>
   }
 
   export type CompanyCreateNestedOneWithoutExpensesInput = {
@@ -60437,11 +61574,25 @@ export namespace Prisma {
     connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
   }
 
+  export type RevenueCreateNestedManyWithoutInventoryItemInput = {
+    create?: XOR<RevenueCreateWithoutInventoryItemInput, RevenueUncheckedCreateWithoutInventoryItemInput> | RevenueCreateWithoutInventoryItemInput[] | RevenueUncheckedCreateWithoutInventoryItemInput[]
+    connectOrCreate?: RevenueCreateOrConnectWithoutInventoryItemInput | RevenueCreateOrConnectWithoutInventoryItemInput[]
+    createMany?: RevenueCreateManyInventoryItemInputEnvelope
+    connect?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+  }
+
   export type InventoryMovementUncheckedCreateNestedManyWithoutItemInput = {
     create?: XOR<InventoryMovementCreateWithoutItemInput, InventoryMovementUncheckedCreateWithoutItemInput> | InventoryMovementCreateWithoutItemInput[] | InventoryMovementUncheckedCreateWithoutItemInput[]
     connectOrCreate?: InventoryMovementCreateOrConnectWithoutItemInput | InventoryMovementCreateOrConnectWithoutItemInput[]
     createMany?: InventoryMovementCreateManyItemInputEnvelope
     connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+  }
+
+  export type RevenueUncheckedCreateNestedManyWithoutInventoryItemInput = {
+    create?: XOR<RevenueCreateWithoutInventoryItemInput, RevenueUncheckedCreateWithoutInventoryItemInput> | RevenueCreateWithoutInventoryItemInput[] | RevenueUncheckedCreateWithoutInventoryItemInput[]
+    connectOrCreate?: RevenueCreateOrConnectWithoutInventoryItemInput | RevenueCreateOrConnectWithoutInventoryItemInput[]
+    createMany?: RevenueCreateManyInventoryItemInputEnvelope
+    connect?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -60474,6 +61625,20 @@ export namespace Prisma {
     deleteMany?: InventoryMovementScalarWhereInput | InventoryMovementScalarWhereInput[]
   }
 
+  export type RevenueUpdateManyWithoutInventoryItemNestedInput = {
+    create?: XOR<RevenueCreateWithoutInventoryItemInput, RevenueUncheckedCreateWithoutInventoryItemInput> | RevenueCreateWithoutInventoryItemInput[] | RevenueUncheckedCreateWithoutInventoryItemInput[]
+    connectOrCreate?: RevenueCreateOrConnectWithoutInventoryItemInput | RevenueCreateOrConnectWithoutInventoryItemInput[]
+    upsert?: RevenueUpsertWithWhereUniqueWithoutInventoryItemInput | RevenueUpsertWithWhereUniqueWithoutInventoryItemInput[]
+    createMany?: RevenueCreateManyInventoryItemInputEnvelope
+    set?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+    disconnect?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+    delete?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+    connect?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+    update?: RevenueUpdateWithWhereUniqueWithoutInventoryItemInput | RevenueUpdateWithWhereUniqueWithoutInventoryItemInput[]
+    updateMany?: RevenueUpdateManyWithWhereWithoutInventoryItemInput | RevenueUpdateManyWithWhereWithoutInventoryItemInput[]
+    deleteMany?: RevenueScalarWhereInput | RevenueScalarWhereInput[]
+  }
+
   export type InventoryMovementUncheckedUpdateManyWithoutItemNestedInput = {
     create?: XOR<InventoryMovementCreateWithoutItemInput, InventoryMovementUncheckedCreateWithoutItemInput> | InventoryMovementCreateWithoutItemInput[] | InventoryMovementUncheckedCreateWithoutItemInput[]
     connectOrCreate?: InventoryMovementCreateOrConnectWithoutItemInput | InventoryMovementCreateOrConnectWithoutItemInput[]
@@ -60486,6 +61651,20 @@ export namespace Prisma {
     update?: InventoryMovementUpdateWithWhereUniqueWithoutItemInput | InventoryMovementUpdateWithWhereUniqueWithoutItemInput[]
     updateMany?: InventoryMovementUpdateManyWithWhereWithoutItemInput | InventoryMovementUpdateManyWithWhereWithoutItemInput[]
     deleteMany?: InventoryMovementScalarWhereInput | InventoryMovementScalarWhereInput[]
+  }
+
+  export type RevenueUncheckedUpdateManyWithoutInventoryItemNestedInput = {
+    create?: XOR<RevenueCreateWithoutInventoryItemInput, RevenueUncheckedCreateWithoutInventoryItemInput> | RevenueCreateWithoutInventoryItemInput[] | RevenueUncheckedCreateWithoutInventoryItemInput[]
+    connectOrCreate?: RevenueCreateOrConnectWithoutInventoryItemInput | RevenueCreateOrConnectWithoutInventoryItemInput[]
+    upsert?: RevenueUpsertWithWhereUniqueWithoutInventoryItemInput | RevenueUpsertWithWhereUniqueWithoutInventoryItemInput[]
+    createMany?: RevenueCreateManyInventoryItemInputEnvelope
+    set?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+    disconnect?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+    delete?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+    connect?: RevenueWhereUniqueInput | RevenueWhereUniqueInput[]
+    update?: RevenueUpdateWithWhereUniqueWithoutInventoryItemInput | RevenueUpdateWithWhereUniqueWithoutInventoryItemInput[]
+    updateMany?: RevenueUpdateManyWithWhereWithoutInventoryItemInput | RevenueUpdateManyWithWhereWithoutInventoryItemInput[]
+    deleteMany?: RevenueScalarWhereInput | RevenueScalarWhereInput[]
   }
 
   export type CompanyCreateNestedOneWithoutInventoryMovementsInput = {
@@ -60820,14 +61999,6 @@ export namespace Prisma {
     update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutRecommendationsInput, CompanyUpdateWithoutRecommendationsInput>, CompanyUncheckedUpdateWithoutRecommendationsInput>
   }
 
-  export type SimulationRunCreatetagsInput = {
-    set: string[]
-  }
-
-  export type SimulationRunCreatecomparedWithInput = {
-    set: string[]
-  }
-
   export type CompanyCreateNestedOneWithoutSimulationsInput = {
     create?: XOR<CompanyCreateWithoutSimulationsInput, CompanyUncheckedCreateWithoutSimulationsInput>
     connectOrCreate?: CompanyCreateOrConnectWithoutSimulationsInput
@@ -60842,16 +62013,6 @@ export namespace Prisma {
 
   export type EnumSimulationScenarioTypeFieldUpdateOperationsInput = {
     set?: $Enums.SimulationScenarioType
-  }
-
-  export type SimulationRunUpdatetagsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type SimulationRunUpdatecomparedWithInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type CompanyUpdateOneRequiredWithoutSimulationsNestedInput = {
@@ -62287,34 +63448,20 @@ export namespace Prisma {
 
   export type SimulationRunCreateWithoutCreatedByUserInput = {
     id?: string
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutSimulationsInput
   }
 
   export type SimulationRunUncheckedCreateWithoutCreatedByUserInput = {
     id?: string
     companyId: string
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type SimulationRunCreateOrConnectWithoutCreatedByUserInput = {
@@ -62765,17 +63912,10 @@ export namespace Prisma {
     id?: StringFilter<"SimulationRun"> | string
     companyId?: StringFilter<"SimulationRun"> | string
     createdByUserId?: StringNullableFilter<"SimulationRun"> | string | null
-    name?: StringNullableFilter<"SimulationRun"> | string | null
-    description?: StringNullableFilter<"SimulationRun"> | string | null
     scenarioType?: EnumSimulationScenarioTypeFilter<"SimulationRun"> | $Enums.SimulationScenarioType
-    tags?: StringNullableListFilter<"SimulationRun">
     parameters?: JsonFilter<"SimulationRun">
     projection?: JsonFilter<"SimulationRun">
-    sensitivity?: JsonNullableFilter<"SimulationRun">
-    timelineMonths?: IntFilter<"SimulationRun"> | number
-    comparedWith?: StringNullableListFilter<"SimulationRun">
     createdAt?: DateTimeFilter<"SimulationRun"> | Date | string
-    updatedAt?: DateTimeFilter<"SimulationRun"> | Date | string
   }
 
   export type LearningProgressUpsertWithWhereUniqueWithoutUserInput = {
@@ -63512,6 +64652,7 @@ export namespace Prisma {
     createdAt?: Date | string
     customer?: CustomerCreateNestedOneWithoutRevenuesInput
     project?: ProjectCreateNestedOneWithoutRevenuesInput
+    inventoryItem?: InventoryItemCreateNestedOneWithoutRevenuesInput
   }
 
   export type RevenueUncheckedCreateWithoutCompanyInput = {
@@ -63527,6 +64668,7 @@ export namespace Prisma {
     quantity?: number | null
     unitPriceCents?: bigint | number | null
     projectId?: string | null
+    inventoryItemId?: string | null
     createdAt?: Date | string
   }
 
@@ -63698,6 +64840,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movements?: InventoryMovementCreateNestedManyWithoutItemInput
+    revenues?: RevenueCreateNestedManyWithoutInventoryItemInput
   }
 
   export type InventoryItemUncheckedCreateWithoutCompanyInput = {
@@ -63712,6 +64855,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movements?: InventoryMovementUncheckedCreateNestedManyWithoutItemInput
+    revenues?: RevenueUncheckedCreateNestedManyWithoutInventoryItemInput
   }
 
   export type InventoryItemCreateOrConnectWithoutCompanyInput = {
@@ -63920,34 +65064,20 @@ export namespace Prisma {
 
   export type SimulationRunCreateWithoutCompanyInput = {
     id?: string
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
     createdByUser?: UserCreateNestedOneWithoutSimulationsInput
   }
 
   export type SimulationRunUncheckedCreateWithoutCompanyInput = {
     id?: string
     createdByUserId?: string | null
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type SimulationRunCreateOrConnectWithoutCompanyInput = {
@@ -64322,6 +65452,7 @@ export namespace Prisma {
     quantity?: IntNullableFilter<"Revenue"> | number | null
     unitPriceCents?: BigIntNullableFilter<"Revenue"> | bigint | number | null
     projectId?: StringNullableFilter<"Revenue"> | string | null
+    inventoryItemId?: StringNullableFilter<"Revenue"> | string | null
     createdAt?: DateTimeFilter<"Revenue"> | Date | string
   }
 
@@ -65037,6 +66168,7 @@ export namespace Prisma {
     createdAt?: Date | string
     company: CompanyCreateNestedOneWithoutRevenuesInput
     customer?: CustomerCreateNestedOneWithoutRevenuesInput
+    inventoryItem?: InventoryItemCreateNestedOneWithoutRevenuesInput
   }
 
   export type RevenueUncheckedCreateWithoutProjectInput = {
@@ -65052,6 +66184,7 @@ export namespace Prisma {
     channel?: string | null
     quantity?: number | null
     unitPriceCents?: bigint | number | null
+    inventoryItemId?: string | null
     createdAt?: Date | string
   }
 
@@ -67088,6 +68221,7 @@ export namespace Prisma {
     createdAt?: Date | string
     company: CompanyCreateNestedOneWithoutRevenuesInput
     project?: ProjectCreateNestedOneWithoutRevenuesInput
+    inventoryItem?: InventoryItemCreateNestedOneWithoutRevenuesInput
   }
 
   export type RevenueUncheckedCreateWithoutCustomerInput = {
@@ -67103,6 +68237,7 @@ export namespace Prisma {
     quantity?: number | null
     unitPriceCents?: bigint | number | null
     projectId?: string | null
+    inventoryItemId?: string | null
     createdAt?: Date | string
   }
 
@@ -67438,6 +68573,41 @@ export namespace Prisma {
     create: XOR<ProjectCreateWithoutRevenuesInput, ProjectUncheckedCreateWithoutRevenuesInput>
   }
 
+  export type InventoryItemCreateWithoutRevenuesInput = {
+    id?: string
+    name: string
+    sku?: string | null
+    unit?: string
+    quantityOnHand?: number
+    lowStockThreshold?: number | null
+    costCentsPerUnit?: number | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutInventoryItemsInput
+    movements?: InventoryMovementCreateNestedManyWithoutItemInput
+  }
+
+  export type InventoryItemUncheckedCreateWithoutRevenuesInput = {
+    id?: string
+    companyId: string
+    name: string
+    sku?: string | null
+    unit?: string
+    quantityOnHand?: number
+    lowStockThreshold?: number | null
+    costCentsPerUnit?: number | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    movements?: InventoryMovementUncheckedCreateNestedManyWithoutItemInput
+  }
+
+  export type InventoryItemCreateOrConnectWithoutRevenuesInput = {
+    where: InventoryItemWhereUniqueInput
+    create: XOR<InventoryItemCreateWithoutRevenuesInput, InventoryItemUncheckedCreateWithoutRevenuesInput>
+  }
+
   export type CompanyUpsertWithoutRevenuesInput = {
     update: XOR<CompanyUpdateWithoutRevenuesInput, CompanyUncheckedUpdateWithoutRevenuesInput>
     create: XOR<CompanyCreateWithoutRevenuesInput, CompanyUncheckedCreateWithoutRevenuesInput>
@@ -67621,6 +68791,47 @@ export namespace Prisma {
     expenses?: ExpenseUncheckedUpdateManyWithoutProjectNestedInput
     timeEntries?: ProjectTimeEntryUncheckedUpdateManyWithoutProjectNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type InventoryItemUpsertWithoutRevenuesInput = {
+    update: XOR<InventoryItemUpdateWithoutRevenuesInput, InventoryItemUncheckedUpdateWithoutRevenuesInput>
+    create: XOR<InventoryItemCreateWithoutRevenuesInput, InventoryItemUncheckedCreateWithoutRevenuesInput>
+    where?: InventoryItemWhereInput
+  }
+
+  export type InventoryItemUpdateToOneWithWhereWithoutRevenuesInput = {
+    where?: InventoryItemWhereInput
+    data: XOR<InventoryItemUpdateWithoutRevenuesInput, InventoryItemUncheckedUpdateWithoutRevenuesInput>
+  }
+
+  export type InventoryItemUpdateWithoutRevenuesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
+    unit?: StringFieldUpdateOperationsInput | string
+    quantityOnHand?: IntFieldUpdateOperationsInput | number
+    lowStockThreshold?: NullableIntFieldUpdateOperationsInput | number | null
+    costCentsPerUnit?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutInventoryItemsNestedInput
+    movements?: InventoryMovementUpdateManyWithoutItemNestedInput
+  }
+
+  export type InventoryItemUncheckedUpdateWithoutRevenuesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
+    unit?: StringFieldUpdateOperationsInput | string
+    quantityOnHand?: IntFieldUpdateOperationsInput | number
+    lowStockThreshold?: NullableIntFieldUpdateOperationsInput | number | null
+    costCentsPerUnit?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    movements?: InventoryMovementUncheckedUpdateManyWithoutItemNestedInput
   }
 
   export type CompanyCreateWithoutExpensesInput = {
@@ -67954,6 +69165,50 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type RevenueCreateWithoutInventoryItemInput = {
+    id?: string
+    occurredAt: Date | string
+    amountCents: bigint | number
+    currency: string
+    description?: string | null
+    paymentMethod?: string | null
+    reference?: string | null
+    channel?: string | null
+    quantity?: number | null
+    unitPriceCents?: bigint | number | null
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutRevenuesInput
+    customer?: CustomerCreateNestedOneWithoutRevenuesInput
+    project?: ProjectCreateNestedOneWithoutRevenuesInput
+  }
+
+  export type RevenueUncheckedCreateWithoutInventoryItemInput = {
+    id?: string
+    companyId: string
+    customerId?: string | null
+    occurredAt: Date | string
+    amountCents: bigint | number
+    currency: string
+    description?: string | null
+    paymentMethod?: string | null
+    reference?: string | null
+    channel?: string | null
+    quantity?: number | null
+    unitPriceCents?: bigint | number | null
+    projectId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RevenueCreateOrConnectWithoutInventoryItemInput = {
+    where: RevenueWhereUniqueInput
+    create: XOR<RevenueCreateWithoutInventoryItemInput, RevenueUncheckedCreateWithoutInventoryItemInput>
+  }
+
+  export type RevenueCreateManyInventoryItemInputEnvelope = {
+    data: RevenueCreateManyInventoryItemInput | RevenueCreateManyInventoryItemInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CompanyUpsertWithoutInventoryItemsInput = {
     update: XOR<CompanyUpdateWithoutInventoryItemsInput, CompanyUncheckedUpdateWithoutInventoryItemsInput>
     create: XOR<CompanyCreateWithoutInventoryItemsInput, CompanyUncheckedCreateWithoutInventoryItemsInput>
@@ -68045,6 +69300,22 @@ export namespace Prisma {
     data: XOR<InventoryMovementUpdateManyMutationInput, InventoryMovementUncheckedUpdateManyWithoutItemInput>
   }
 
+  export type RevenueUpsertWithWhereUniqueWithoutInventoryItemInput = {
+    where: RevenueWhereUniqueInput
+    update: XOR<RevenueUpdateWithoutInventoryItemInput, RevenueUncheckedUpdateWithoutInventoryItemInput>
+    create: XOR<RevenueCreateWithoutInventoryItemInput, RevenueUncheckedCreateWithoutInventoryItemInput>
+  }
+
+  export type RevenueUpdateWithWhereUniqueWithoutInventoryItemInput = {
+    where: RevenueWhereUniqueInput
+    data: XOR<RevenueUpdateWithoutInventoryItemInput, RevenueUncheckedUpdateWithoutInventoryItemInput>
+  }
+
+  export type RevenueUpdateManyWithWhereWithoutInventoryItemInput = {
+    where: RevenueScalarWhereInput
+    data: XOR<RevenueUpdateManyMutationInput, RevenueUncheckedUpdateManyWithoutInventoryItemInput>
+  }
+
   export type CompanyCreateWithoutInventoryMovementsInput = {
     id?: string
     name: string
@@ -68126,6 +69397,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutInventoryItemsInput
+    revenues?: RevenueCreateNestedManyWithoutInventoryItemInput
   }
 
   export type InventoryItemUncheckedCreateWithoutMovementsInput = {
@@ -68140,6 +69412,7 @@ export namespace Prisma {
     notes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    revenues?: RevenueUncheckedCreateNestedManyWithoutInventoryItemInput
   }
 
   export type InventoryItemCreateOrConnectWithoutMovementsInput = {
@@ -68245,6 +69518,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutInventoryItemsNestedInput
+    revenues?: RevenueUpdateManyWithoutInventoryItemNestedInput
   }
 
   export type InventoryItemUncheckedUpdateWithoutMovementsInput = {
@@ -68259,6 +69533,7 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revenues?: RevenueUncheckedUpdateManyWithoutInventoryItemNestedInput
   }
 
   export type CompanyCreateWithoutOperationsInput = {
@@ -72984,17 +74259,10 @@ export namespace Prisma {
   export type SimulationRunCreateManyCreatedByUserInput = {
     id?: string
     companyId: string
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type LearningProgressCreateManyUserInput = {
@@ -73136,50 +74404,29 @@ export namespace Prisma {
 
   export type SimulationRunUpdateWithoutCreatedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutSimulationsNestedInput
   }
 
   export type SimulationRunUncheckedUpdateWithoutCreatedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SimulationRunUncheckedUpdateManyWithoutCreatedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LearningProgressUpdateWithoutUserInput = {
@@ -73665,6 +74912,7 @@ export namespace Prisma {
     quantity?: number | null
     unitPriceCents?: bigint | number | null
     projectId?: string | null
+    inventoryItemId?: string | null
     createdAt?: Date | string
   }
 
@@ -73795,17 +75043,10 @@ export namespace Prisma {
   export type SimulationRunCreateManyCompanyInput = {
     id?: string
     createdByUserId?: string | null
-    name?: string | null
-    description?: string | null
     scenarioType: $Enums.SimulationScenarioType
-    tags?: SimulationRunCreatetagsInput | string[]
     parameters: JsonNullValueInput | InputJsonValue
     projection: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: number
-    comparedWith?: SimulationRunCreatecomparedWithInput | string[]
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type LearningProgressCreateManyCompanyInput = {
@@ -74173,6 +75414,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: CustomerUpdateOneWithoutRevenuesNestedInput
     project?: ProjectUpdateOneWithoutRevenuesNestedInput
+    inventoryItem?: InventoryItemUpdateOneWithoutRevenuesNestedInput
   }
 
   export type RevenueUncheckedUpdateWithoutCompanyInput = {
@@ -74188,6 +75430,7 @@ export namespace Prisma {
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    inventoryItemId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -74204,6 +75447,7 @@ export namespace Prisma {
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    inventoryItemId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -74373,6 +75617,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movements?: InventoryMovementUpdateManyWithoutItemNestedInput
+    revenues?: RevenueUpdateManyWithoutInventoryItemNestedInput
   }
 
   export type InventoryItemUncheckedUpdateWithoutCompanyInput = {
@@ -74387,6 +75632,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movements?: InventoryMovementUncheckedUpdateManyWithoutItemNestedInput
+    revenues?: RevenueUncheckedUpdateManyWithoutInventoryItemNestedInput
   }
 
   export type InventoryItemUncheckedUpdateManyWithoutCompanyInput = {
@@ -74601,50 +75847,29 @@ export namespace Prisma {
 
   export type SimulationRunUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdByUser?: UserUpdateOneWithoutSimulationsNestedInput
   }
 
   export type SimulationRunUncheckedUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SimulationRunUncheckedUpdateManyWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     scenarioType?: EnumSimulationScenarioTypeFieldUpdateOperationsInput | $Enums.SimulationScenarioType
-    tags?: SimulationRunUpdatetagsInput | string[]
     parameters?: JsonNullValueInput | InputJsonValue
     projection?: JsonNullValueInput | InputJsonValue
-    sensitivity?: NullableJsonNullValueInput | InputJsonValue
-    timelineMonths?: IntFieldUpdateOperationsInput | number
-    comparedWith?: SimulationRunUpdatecomparedWithInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LearningProgressUpdateWithoutCompanyInput = {
@@ -74831,6 +76056,7 @@ export namespace Prisma {
     channel?: string | null
     quantity?: number | null
     unitPriceCents?: bigint | number | null
+    inventoryItemId?: string | null
     createdAt?: Date | string
   }
 
@@ -74940,6 +76166,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutRevenuesNestedInput
     customer?: CustomerUpdateOneWithoutRevenuesNestedInput
+    inventoryItem?: InventoryItemUpdateOneWithoutRevenuesNestedInput
   }
 
   export type RevenueUncheckedUpdateWithoutProjectInput = {
@@ -74955,6 +76182,7 @@ export namespace Prisma {
     channel?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    inventoryItemId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -74971,6 +76199,7 @@ export namespace Prisma {
     channel?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    inventoryItemId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -75236,6 +76465,7 @@ export namespace Prisma {
     quantity?: number | null
     unitPriceCents?: bigint | number | null
     projectId?: string | null
+    inventoryItemId?: string | null
     createdAt?: Date | string
   }
 
@@ -75272,6 +76502,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutRevenuesNestedInput
     project?: ProjectUpdateOneWithoutRevenuesNestedInput
+    inventoryItem?: InventoryItemUpdateOneWithoutRevenuesNestedInput
   }
 
   export type RevenueUncheckedUpdateWithoutCustomerInput = {
@@ -75287,6 +76518,7 @@ export namespace Prisma {
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    inventoryItemId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -75303,6 +76535,7 @@ export namespace Prisma {
     quantity?: NullableIntFieldUpdateOperationsInput | number | null
     unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    inventoryItemId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -75373,6 +76606,23 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type RevenueCreateManyInventoryItemInput = {
+    id?: string
+    companyId: string
+    customerId?: string | null
+    occurredAt: Date | string
+    amountCents: bigint | number
+    currency: string
+    description?: string | null
+    paymentMethod?: string | null
+    reference?: string | null
+    channel?: string | null
+    quantity?: number | null
+    unitPriceCents?: bigint | number | null
+    projectId?: string | null
+    createdAt?: Date | string
+  }
+
   export type InventoryMovementUpdateWithoutItemInput = {
     id?: StringFieldUpdateOperationsInput | string
     direction?: EnumInventoryMovementDirectionFieldUpdateOperationsInput | $Enums.InventoryMovementDirection
@@ -75400,6 +76650,57 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     occurredAt?: DateTimeFieldUpdateOperationsInput | Date | string
     note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RevenueUpdateWithoutInventoryItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    occurredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amountCents?: BigIntFieldUpdateOperationsInput | bigint | number
+    currency?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: NullableStringFieldUpdateOperationsInput | string | null
+    quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutRevenuesNestedInput
+    customer?: CustomerUpdateOneWithoutRevenuesNestedInput
+    project?: ProjectUpdateOneWithoutRevenuesNestedInput
+  }
+
+  export type RevenueUncheckedUpdateWithoutInventoryItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    customerId?: NullableStringFieldUpdateOperationsInput | string | null
+    occurredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amountCents?: BigIntFieldUpdateOperationsInput | bigint | number
+    currency?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: NullableStringFieldUpdateOperationsInput | string | null
+    quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RevenueUncheckedUpdateManyWithoutInventoryItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    customerId?: NullableStringFieldUpdateOperationsInput | string | null
+    occurredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amountCents?: BigIntFieldUpdateOperationsInput | bigint | number
+    currency?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: NullableStringFieldUpdateOperationsInput | string | null
+    quantity?: NullableIntFieldUpdateOperationsInput | number | null
+    unitPriceCents?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

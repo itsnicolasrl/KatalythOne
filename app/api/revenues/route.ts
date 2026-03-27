@@ -18,6 +18,7 @@ const createSchema = z.object({
   channel: z.string().min(0).max(40).optional().nullable(),
   quantity: z.coerce.number().int().min(0).optional().nullable(),
   unitPrice: z.coerce.number().finite().min(0).optional().nullable(),
+  inventoryItemId: z.string().min(1).optional().nullable(),
 });
 
 export async function GET() {
@@ -65,6 +66,7 @@ export async function POST(req: Request) {
         body.unitPrice === null || body.unitPrice === undefined
           ? null
           : moneyToCents(body.unitPrice),
+      inventoryItemId: body.inventoryItemId ?? null,
     });
 
     return NextResponse.json({ revenue }, { status: 201 });

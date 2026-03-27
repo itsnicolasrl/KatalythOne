@@ -258,6 +258,7 @@ exports.Prisma.RevenueScalarFieldEnum = {
   quantity: 'quantity',
   unitPriceCents: 'unitPriceCents',
   projectId: 'projectId',
+  inventoryItemId: 'inventoryItemId',
   createdAt: 'createdAt'
 };
 
@@ -371,17 +372,19 @@ exports.Prisma.SimulationRunScalarFieldEnum = {
   id: 'id',
   companyId: 'companyId',
   createdByUserId: 'createdByUserId',
-  name: 'name',
-  description: 'description',
   scenarioType: 'scenarioType',
-  tags: 'tags',
   parameters: 'parameters',
   projection: 'projection',
-  sensitivity: 'sensitivity',
-  timelineMonths: 'timelineMonths',
-  comparedWith: 'comparedWith',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AiDocumentScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  source: 'source',
+  content: 'content',
+  embedding: 'embedding',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.LearningProgressScalarFieldEnum = {
@@ -672,13 +675,7 @@ exports.SimulationScenarioType = exports.$Enums.SimulationScenarioType = {
   PRICE_CHANGE: 'PRICE_CHANGE',
   COST_INCREASE: 'COST_INCREASE',
   NEW_PRODUCT: 'NEW_PRODUCT',
-  CUSTOMER_CHURN: 'CUSTOMER_CHURN',
-  MARKET_EXPANSION: 'MARKET_EXPANSION',
-  MARKETING_CAMPAIGN: 'MARKETING_CAMPAIGN',
-  BREAK_EVEN: 'BREAK_EVEN',
-  DOWNTURN: 'DOWNTURN',
-  SEASONAL: 'SEASONAL',
-  MULTI_VARIABLE: 'MULTI_VARIABLE'
+  CONTRACTING: 'CONTRACTING'
 };
 
 exports.OnboardingMode = exports.$Enums.OnboardingMode = {
@@ -762,6 +759,7 @@ exports.Prisma.ModelName = {
   Alert: 'Alert',
   Recommendation: 'Recommendation',
   SimulationRun: 'SimulationRun',
+  AiDocument: 'AiDocument',
   LearningProgress: 'LearningProgress',
   RefreshToken: 'RefreshToken',
   Permission: 'Permission',

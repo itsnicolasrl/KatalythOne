@@ -53,8 +53,11 @@ function computeMarginBps(revenueCents: number, expenseCents: number) {
 export async function simulateGrowthBundle(params: {
   companyId: string;
   inputs: SimulationInputs;
-  createdByUserId?: string | null;
+  createdByUserId: string;
 }): Promise<SimulationResponse> {
+  if (!params.createdByUserId) {
+    throw new HttpError("Usuario creador inválido para la simulación", 400, "USER_INVALID");
+  }
   const prisma = getPrisma();
 
   const latest = await prisma.metricSnapshot.findFirst({
@@ -194,7 +197,7 @@ export async function simulateGrowthBundle(params: {
   const created = await prisma.simulationRun.create({
     data: {
       companyId: params.companyId,
-      createdByUserId: params.createdByUserId ?? null,
+      createdByUserId: params.createdByUserId,
       scenarioType,
       parameters: {
         inputs: params.inputs,

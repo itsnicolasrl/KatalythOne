@@ -19,8 +19,11 @@ export async function POST(req: Request) {
   try {
     requireSameOrigin(req);
     const user = await requireUser();
+    if (!user.id) return NextResponse.json({ error: "Usuario inválido" }, { status: 400 });
     const company = await getActiveCompanyForRequest();
-    if (!company) return NextResponse.json({ error: "No hay empresa activa" }, { status: 400 });
+    if (!company || !company.id) return NextResponse.json({ error: "No hay empresa activa" }, { status: 400 });
+
+    console.log('User ID:', user.id, 'Company ID:', company.id);
 
     enforceRateLimit({
       key: `sim:${user.id}:${getClientIp(req)}`,
@@ -34,6 +37,10 @@ export async function POST(req: Request) {
     });
 
     const body = bodySchema.parse(await req.json().catch(() => ({})));
+
+    if (!user?.id) {
+      return NextResponse.json({ error: "Usuario no validado" }, { status: 401 });
+    }
 
     const result = await simulateGrowthBundle({
       companyId: company.id,

@@ -371,11 +371,15 @@ model Revenue {
   // Para imputar ingresos a proyectos (MVP).
   projectId String?
 
+  // Para vincular con movimientos de inventario.
+  inventoryItemId String?
+
   createdAt   DateTime @default(now())
 
   company  Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
   project  Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  inventoryItem InventoryItem? @relation(fields: [inventoryItemId], references: [id], onDelete: SetNull)
 
   @@index([companyId, occurredAt])
 }
@@ -428,6 +432,7 @@ model InventoryItem {
 
   company   Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
   movements InventoryMovement[]
+  revenues  Revenue[]
 
   @@index([companyId])
 }
@@ -580,6 +585,17 @@ model SimulationRun {
   createdByUser User? @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
 
   @@index([companyId, createdAt])
+}
+
+model AiDocument {
+  id String @id @default(cuid())
+  companyId String
+  source String
+  content String
+  embedding Json?
+  createdAt DateTime @default(now())
+
+  @@index([companyId])
 }
 
 model LearningProgress {

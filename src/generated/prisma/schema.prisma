@@ -47,16 +47,10 @@ enum AlertStatus {
 }
 
 enum SimulationScenarioType {
-  PRICE_CHANGE // Cambio de precios (+ o -)
-  COST_INCREASE // Aumento de costos operativos
-  NEW_PRODUCT // Lanzamiento de nuevos productos/clientes
-  CUSTOMER_CHURN // Retención/fuga de clientes
-  MARKET_EXPANSION // Expansión a nuevos mercados
-  MARKETING_CAMPAIGN // Impacto de campaña de marketing
-  BREAK_EVEN // Análisis punto de equilibrio
-  DOWNTURN // Escenario de contracción/crisis
-  SEASONAL // Impacto de estacionalidad
-  MULTI_VARIABLE // Simulación con múltiples variables
+  PRICE_CHANGE
+  COST_INCREASE
+  NEW_PRODUCT
+  CONTRACTING
 }
 
 enum ProjectStatus {
@@ -377,11 +371,15 @@ model Revenue {
   // Para imputar ingresos a proyectos (MVP).
   projectId String?
 
+  // Para vincular con movimientos de inventario.
+  inventoryItemId String?
+
   createdAt DateTime @default(now())
 
-  company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  project  Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer      Customer?      @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  project       Project?       @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  inventoryItem InventoryItem? @relation(fields: [inventoryItemId], references: [id], onDelete: SetNull)
 
   @@index([companyId, occurredAt])
 }
@@ -434,6 +432,7 @@ model InventoryItem {
 
   company   Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
   movements InventoryMovement[]
+  revenues  Revenue[]
 
   @@index([companyId])
 }
@@ -576,34 +575,27 @@ model SimulationRun {
   companyId       String
   createdByUserId String?
 
-  // Metadata y descripción
-  name         String? // Nombre del escenario ("Escenario optimista", "Contracción Q4", etc.)
-  description  String? // Descripción detallada del caso
   scenarioType SimulationScenarioType
-  tags         String[]               @default([]) // Para categorizar y filtrar ("urgente", "comparativa", etc.)
-
-  // Datos de entrada y proyección
-  parameters Json // { inputs, baselineSnapshotId, ... }
-  projection Json // { financial, operational, timeline, ... }
-
-  // Para análisis de sensibilidad
-  sensitivity Json? // { variableImpact, riskFactors, ... }
-
-  // Timeline de proyección
-  timelineMonths Int @default(12) // Meses a proyectar
-
-  // Comparación
-  comparedWith String[] @default([]) // IDs de simulaciones con la que se comparó
+  parameters   Json
+  projection   Json
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   company       Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   createdByUser User?   @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
 
   @@index([companyId, createdAt])
-  @@index([scenarioType])
-  @@index([name])
+}
+
+model AiDocument {
+  id        String   @id @default(cuid())
+  companyId String
+  source    String
+  content   String
+  embedding Json?
+  createdAt DateTime @default(now())
+
+  @@index([companyId])
 }
 
 model LearningProgress {

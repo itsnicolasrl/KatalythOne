@@ -35,6 +35,8 @@ export function ExecutiveRecommendationsModule(props: { recommendations: Recomme
   const router = useRouter();
   const [acceptingId, setAcceptingId] = React.useState<string | null>(null);
   const [status, setStatus] = React.useState<{ ok: boolean; message: string } | null>(null);
+  const [aiResponse, setAiResponse] = React.useState<string | null>(null);
+  const [aiLoading, setAiLoading] = React.useState(false);
 
   async function onAccept(recommendationId: string) {
     setAcceptingId(recommendationId);
@@ -73,6 +75,28 @@ export function ExecutiveRecommendationsModule(props: { recommendations: Recomme
     }
   }
 
+  async function onAskAi() {
+    setAiLoading(true);
+    setAiResponse(null);
+
+    try {
+      const res = await fetch(`/api/ai/query`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: "¿Cuáles son las tres acciones de mayor impacto que debería tomar esta empresa?" }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json?.error ?? "No se pudo obtener respuesta de IA");
+      }
+      setAiResponse(json.answer ?? "No hay respuesta");
+    } catch (e) {
+      setAiResponse(e instanceof Error ? e.message : "Error de red");
+    } finally {
+      setAiLoading(false);
+    }
+  }
+
   const fmtImpact = (impact: number | null, currency: string) => {
     if (impact == null) return null;
     return `${(impact / 100).toLocaleString("es-CO", { minimumFractionDigits: 2 })} ${currency}`;
@@ -80,6 +104,28 @@ export function ExecutiveRecommendationsModule(props: { recommendations: Recomme
 
   return (
     <div className="space-y-4">
+      <div className="flex flex-wrap gap-2 items-center">
+        <button
+          type="button"
+          disabled={aiLoading}
+          onClick={() => void onAskAi()}
+          className={[
+            "rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 transition-colors",
+            aiLoading ? "opacity-60 cursor-not-allowed" : "",
+          ].join(" ")}
+        >
+          {aiLoading ? "Consultando IA..." : "Consulta rápida de IA"}
+        </button>
+        <p className="text-[10px] text-black/40">Basado en histórico y documentación interna de la empresa.</p>
+      </div>
+
+      {aiResponse && (
+        <div className="rounded-xl border border-blue-100 bg-blue-50 p-3 text-xs text-blue-900">
+          <strong>Respuesta IA:</strong>
+          <p className="mt-1 whitespace-pre-line">{aiResponse}</p>
+        </div>
+      )}
+
       {props.recommendations.length === 0 ? (
         <p className="text-sm text-black/45 py-4 text-center">Sin recomendaciones en el último análisis.</p>
       ) : (
