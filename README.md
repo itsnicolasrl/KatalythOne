@@ -38,14 +38,14 @@ pnpm install
 
 ### 3️⃣ Configurar variables de entorno
 
-Copia el archivo `.env.example` a `.env.local`:
+Copia el archivo `.env.example` a `.env`:
 
 ```bash
 # En Windows (PowerShell)
-Copy-Item .env.example .env.local
+Copy-Item .env.example .env.
 
 # O en Linux/Mac
-cp .env.example .env.local
+cp .env.example .env
 ```
 
 **Luego, abre `.env.local` y actualiza las siguientes variables:**
@@ -55,7 +55,7 @@ cp .env.example .env.local
 ```env
 # Formato: postgresql://USUARIO:CONTRASEÑA@HOST:PUERTO/NOMBRE_DB?schema=public
 # Ejemplo local:
-DATABASE_URL="postgresql://postgres:password@localhost:5432/katalyth_dev?schema=public"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/katalythone?schema=public"
 
 # Ejemplo remoto (Vercel, Railway, etc):
 DATABASE_URL="postgresql://user:password@db.provider.com:5432/dbname?schema=public"
@@ -110,7 +110,7 @@ Si tienes PostgreSQL instalado localmente:
 
 ```bash
 # Crea la base de datos (si no existe)
-createdb katalyth_dev
+createdb katalythone
 
 # Actualiza DATABASE_URL en .env.local a:
 # DATABASE_URL="postgresql://postgres:password@localhost:5432/katalyth_dev?schema=public"
